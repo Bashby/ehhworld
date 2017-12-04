@@ -1,0 +1,17 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: ehh-world-network
+
+services:
+  client:
+    build:
+      context: ..
+      dockerfile: ./Dockerfile
+    # command: yarr
+    # volumes:
+    #  - .:/go/src/app
+    # ports:
+    #   - "8080:80"
