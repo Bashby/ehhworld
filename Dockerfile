@@ -1,11 +1,20 @@
-FROM golang
+FROM node
 
-WORKDIR /go/src/app
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+WORKDIR /home/node/app
+
+# Install deps; allow docker to cache this
+# COPY package.json /tmp/package.json
+# RUN cd /tmp && npm install
+# RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
+
+COPY package*.json ./
+
+RUN npm install
+
 COPY . .
 
-RUN go-wrapper download
-RUN go-wrapper install
+EXPOSE 8080
 
-#RUN dep ensure -vendor-only
-
-CMD ["go-wrapper", "run"]
+CMD [ "npm", "start" ]
