@@ -2,21 +2,23 @@
 import actionCreatorFactory from 'typescript-fsa';
 
 // Local Imports
+import { Item, ItemUpdate } from '../structures/item';
 
 
 // Prepare action creator
 const inventoryActionCreator = actionCreatorFactory("Inventory");
 
 // Create actions
-const UpdateName = inventoryActionCreator<string>('UPDATE_NAME');
-const UpdateAuthenticated = inventoryActionCreator<boolean>('UPDATE_AUTHENTICATED');
-const UpdateLevel = inventoryActionCreator<number>('UPDATE_LEVEL');
-const UpdatePosition = inventoryActionCreator<WorldPosition>('UPDATE_POSITION');
+const SetSlots = inventoryActionCreator<{[id: string] : Item}>('SET_SLOTS');
+const SetSlot = inventoryActionCreator<Item>('SET_SLOT');
+const UpdateSlot = inventoryActionCreator<ItemUpdate>('UPDATE_SLOT');
+
+// Custom action payloads
+
 
 // Bundle and export action creators
-export const inventoryActionCreators = {
-	updateName: UpdateName,
-	updateAuthenticated: UpdateAuthenticated,
-    updateLevel: UpdateLevel,
-    updatePosition: UpdatePosition
+export const InventoryActionCreators = {
+    setSlots: SetSlots,
+    setSlot: SetSlot,
+	updateSlot: UpdateSlot
 };

@@ -1,9 +1,10 @@
 // Lib Imports
 import { reducerWithInitialState } from "typescript-fsa-reducers";
+import { Map, fromJS } from "immutable";
 
 // Local Imports
 import { PlayerActionCreators } from "../actions/player";
-import { WorldPosition, RandomWorldPosition } from '../../game/world';
+import { IWorldPosition, RandomWorldPosition } from '../../game/world';
 import { getRandomInt } from '../../game/util';
 
 // Player state interface
@@ -11,7 +12,7 @@ export interface IPlayerState {
 	name: string;
 	authenticated: boolean;
 	level: number;
-	position: WorldPosition
+	position: IWorldPosition;
 }
 
 // Player initial state
@@ -45,7 +46,7 @@ export const playerReducer = reducerWithInitialState(PLAYER_INITIAL_STATE)
 	.case(PlayerActionCreators.updatePosition, (state, payload) => {
 		return {
 			...state,
-			position: payload
+			position: fromJS(state.position).merge(payload)
 		};
 	})
 	.build();

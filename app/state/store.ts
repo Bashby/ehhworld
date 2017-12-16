@@ -1,5 +1,5 @@
 // Lib Imports
-import { applyMiddleware, createStore, compose, Store, StoreEnhancer, GenericStoreEnhancer } from 'redux';
+import { applyMiddleware, createStore, compose, Store, StoreEnhancer } from 'redux';
 import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
