@@ -4,7 +4,6 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { connect } from 'react-redux';
 import { ActionCreator } from 'typescript-fsa';
-import { HotKeys } from 'react-hotkeys';
 
 import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux'
@@ -12,7 +11,6 @@ import { Route, Switch, Redirect } from "react-router";
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
-import { GameContainer } from './game';
 
 
 // Interfaces
@@ -45,19 +43,8 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 	}
 }
 
-// HotKey maps and handlers
-const keyMap = {
-	showInventory: ['i', "I"],
-	showWorldMap: ['m', 'M'],
-	showCharacter: ['c', 'C'],
-};
-
-const handlers = {
-	'moveUp': (event) => console.log('Move up hotkey called!')
-};
-
 // Component class
-class AppComponent extends React.Component<AllProps, State> {
+class GameComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
@@ -69,7 +56,9 @@ class AppComponent extends React.Component<AllProps, State> {
 			<div className="full-height">
 				<HotKeys keyMap={keyMap} handlers={handlers}>
 					<Switch>
-						<Route component={GameContainer} />
+						<Route path="/login" component={LoginContainer} />
+						<Route path="/signup" component={SignupContainer} />
+						<Route component={SelectionsContainer} />
 					</Switch>
 				</HotKeys>
 			</div>
@@ -77,8 +66,8 @@ class AppComponent extends React.Component<AllProps, State> {
 	}
 }
 
-// State-aware Container
-export const AppContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
+// State-aware container
+export const GameContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(AppComponent);
+)(GameComponent);

@@ -3,15 +3,15 @@ import * as React from 'react';
 import { render } from 'react-dom';
 
 // Local Imports
-import { AppContainer } from './containers/app';
+import { AppContainer } from './ui/containers/app';
 import { configureStore, history } from './state/store';
-import { INITIAL_STATE } from './state/reducers/root';
+import { APPLICATION_INITIAL_STATE } from './state/application';
 
 // App Constants
 export const APP_VERSION: string = "0.1.0";
 
 // Hydrate state
-const store = configureStore(INITIAL_STATE);
+const store = configureStore(APPLICATION_INITIAL_STATE);
 
 // Render application
 const renderTarget = document.getElementById('application');

@@ -5,7 +5,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
 // Local Imports
-import { IApplicationState, applicationReducer } from './state';
+import { IApplicationState, applicationReducer } from './application';
 
 
 // Prepare store middleware
