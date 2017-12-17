@@ -26,8 +26,6 @@ type ItemMeta = {
     equipped: boolean
 }
 
-type AnonymousItem = ItemBase & ItemMeta;
-
 enum ItemRarity {
     Trash = 1,
     Common,
@@ -144,5 +142,6 @@ enum ItemSubCategory {
     Cosmetic,
 }
 
+type AnonymousItem = ItemBase & ItemMeta;
 export type Item = ItemId & ItemBase & ItemMeta;
 export type ItemUpdate = ItemId & Partial<AnonymousItem>;

@@ -173,10 +173,10 @@ module.exports = {
 		// "react-dom": "ReactDOM",
 	},
 	node: {
-		console: true,
-		fs: 'empty',
-		net: 'empty',
-		tls: 'empty'
+		// console: true,
+		// fs: 'empty',
+		// net: 'empty',
+		// tls: 'empty'
 	},
 	plugins: [
 		// Clean up existing

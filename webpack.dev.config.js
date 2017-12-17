@@ -53,6 +53,6 @@ module.exports = Merge(CommonConfig, {
 		new webpack.NamedModulesPlugin()
 	],
 	devServer: {
-		historyApiFallback: true
+		//historyApiFallback: true
 	}
 })

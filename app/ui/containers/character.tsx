@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 }
 
 // Component class
-class GameComponent extends React.Component<AllProps, State> {
+class CharacterComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
@@ -54,14 +54,14 @@ class GameComponent extends React.Component<AllProps, State> {
 	render() {
 		return (
 			<div>
-				Game Container!
+				Character Container!
 			</div>
 		);
 	}
 }
 
 // State-aware container
-export const GameContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
+export const CharacterContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(GameComponent);
+)(CharacterComponent);

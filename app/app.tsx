@@ -6,6 +6,7 @@ import { render } from 'react-dom';
 import { AppContainer } from './ui/containers/app';
 import { configureStore, history } from './state/store';
 import { APPLICATION_INITIAL_STATE } from './state/application';
+import 'normalize.css';
 
 // App Constants
 export const APP_VERSION: string = "0.1.0";

@@ -4,13 +4,14 @@ import { Reducer, combineReducers } from "redux";
 // Local Imports
 import { IPlayerState, PLAYER_INITIAL_STATE, playerReducer } from "./reducers/player";
 import { IInventoryState, INVENTORY_INITIAL_STATE, inventoryReducer } from "./reducers/inventory";
+import { IUiState, UI_INITIAL_STATE, uiReducer } from "./reducers/ui";
 
 
 // Entire Application state interface
 export interface IApplicationState {
 	playerState: IPlayerState
 	inventoryState: IInventoryState
-	// worldMapState: IWorldMapState
+	uiState: IUiState
 	// minimapState: IMinimapState
 };
 
@@ -18,7 +19,7 @@ export interface IApplicationState {
 export const APPLICATION_INITIAL_STATE: IApplicationState = {
 	playerState: PLAYER_INITIAL_STATE,
 	inventoryState: INVENTORY_INITIAL_STATE,
-	// worldMapState: WORLDMAP_INITIAL_STATE,
+	uiState: UI_INITIAL_STATE,
 	// minimapState: MINIMAP_INITIAL_STATE,
 }
 
@@ -26,6 +27,6 @@ export const APPLICATION_INITIAL_STATE: IApplicationState = {
 export const applicationReducer: Reducer<IApplicationState> = combineReducers<IApplicationState>({
 	playerState: playerReducer,
 	inventoryState: inventoryReducer,
-	// worldMapState: worldMapReducer,
+	uiState: uiReducer,
 	// minimapState: minimapReducer
 });
