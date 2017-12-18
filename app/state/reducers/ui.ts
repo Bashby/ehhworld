@@ -28,7 +28,7 @@ let visOverlays: UiVisibilityGroup = {
 };
 export const UI_INITIAL_STATE: IUiState = {
 	visibility: {
-		'inventory': { visible: true, visGroups: [visOverlays, visGlobalUI] },
+		'inventory': { visible: false, visGroups: [visOverlays, visGlobalUI] },
 		'character': { visible: false, visGroups: [visOverlays, visGlobalUI] },
 		'worldmap': { visible: false, visGroups: [visOverlays,visGlobalUI] },
 		'crafting': { visible: false, visGroups: [visOverlays,visGlobalUI] },

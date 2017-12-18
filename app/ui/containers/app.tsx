@@ -73,8 +73,8 @@ const keyMap = {
 // Styled-componenets
 const Wrapper = styled.section`
 	height: 100vh;
-	display: flex;
-	flex-direction: column;
+	width: 100vw;
+	background-color: black;
 `;
 
 // Component class
