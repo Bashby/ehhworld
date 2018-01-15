@@ -13,7 +13,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
-import { GUIOverlayView } from '../styles';
+import { GUIBaseView } from '../styles';
 
 
 // Interfaces
@@ -47,12 +47,15 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 }
 
 // Styled-components
-const InventoryContainerView = styled(GUIOverlayView)`
-	background-color: green;
+const MiniMapContainerView = styled(GUIBaseView)`
+	width: 18vw;
+	height: 15vh;
+	top: 0.5vh;
+	right: 0.29vw;
 `;
 
 // Component class
-class InventoryComponent extends React.Component<AllProps, State> {
+class MiniMapComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
@@ -61,15 +64,15 @@ class InventoryComponent extends React.Component<AllProps, State> {
 
 	render() {
 		return (
-			<InventoryContainerView>
-				Inventory Container!
-			</InventoryContainerView>
+			<MiniMapContainerView>
+				MiniMap Container!
+			</MiniMapContainerView>
 		);
 	}
 }
 
 // State-aware container
-export const InventoryContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
+export const MiniMapContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(InventoryComponent);
+)(MiniMapComponent);

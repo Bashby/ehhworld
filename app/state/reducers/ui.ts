@@ -10,6 +10,7 @@ import { UiVisibilityGroup, AnonymousUiVisibility } from "../structures/ui";
 
 // UI state interface
 export interface IUiState {
+	visible: boolean
 	visibility: {
 		[id: string] : AnonymousUiVisibility
 	}
@@ -27,12 +28,21 @@ let visOverlays: UiVisibilityGroup = {
 	zIndex: 100
 };
 export const UI_INITIAL_STATE: IUiState = {
+	visible: true,
 	visibility: {
-		'inventory': { visible: false, visGroups: [visOverlays, visGlobalUI] },
+		// Vis Overlays
+		'blank': { visible: false, visGroups: [visOverlays, visGlobalUI] },
 		'character': { visible: false, visGroups: [visOverlays, visGlobalUI] },
 		'worldmap': { visible: false, visGroups: [visOverlays,visGlobalUI] },
+		'questlog': { visible: false, visGroups: [visOverlays,visGlobalUI] },
+		'inventory': { visible: false, visGroups: [visOverlays, visGlobalUI] },
+		'social': { visible: false, visGroups: [visOverlays,visGlobalUI] },
 		'crafting': { visible: false, visGroups: [visOverlays,visGlobalUI] },
-		'chat': { visible: false, visGroups: [visGlobalUI] },
+		// Top-level GUI elements
+		'chat': { visible: true, visGroups: [visGlobalUI] },
+		'actionbar': { visible: true, visGroups: [visGlobalUI] },
+		'minimap': { visible: true, visGroups: [visGlobalUI] },
+		'eventlog': { visible: true, visGroups: [visGlobalUI] },
 	}
 }
 
@@ -58,6 +68,19 @@ export const uiReducer = reducerWithInitialState(UI_INITIAL_STATE)
 		return newState;
 	})
 	.case(UiActionCreators.toggleVisibility, (state, payload) => {
+		// Toggle top-level visibility if global
+		if (payload == 'global') {
+			return {
+				...state,
+				visible: !state.visible
+			}
+		}
+
+		// Short, if you didn't give me anything useful
+		if (state.visibility[payload] === undefined) {
+			return state
+		}
+
 		return {
 			...state,
 			visibility: {

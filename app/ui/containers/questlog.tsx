@@ -47,12 +47,12 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 }
 
 // Styled-components
-const InventoryContainerView = styled(GUIOverlayView)`
-	background-color: green;
+const QuestLogContainerView = styled(GUIOverlayView)`
+	background-color: red;
 `;
 
 // Component class
-class InventoryComponent extends React.Component<AllProps, State> {
+class QuestLogComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
@@ -61,15 +61,15 @@ class InventoryComponent extends React.Component<AllProps, State> {
 
 	render() {
 		return (
-			<InventoryContainerView>
-				Inventory Container!
-			</InventoryContainerView>
+			<QuestLogContainerView>
+				QuestLog Container!
+			</QuestLogContainerView>
 		);
 	}
 }
 
 // State-aware container
-export const InventoryContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
+export const QuestLogContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(InventoryComponent);
+)(QuestLogComponent);

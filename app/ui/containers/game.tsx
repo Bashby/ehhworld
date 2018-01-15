@@ -33,13 +33,15 @@ interface MyOwnProps {
 }
 
 interface State {
-	// gameDiv: HTMLDivElement
-	// renderer?: PIXI.WebGLRenderer | PIXI.CanvasRenderer
+	applicationViewId: string,
 	stage: Pixi.Container
 	targetDimensions: {
 		width: number,
 		height: number
 	}
+	backgroundColor: number
+	isBackgroundTransparent: boolean
+	pixelResolution: number
 }
 
 // State mappings
@@ -55,9 +57,6 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 
 // Styled-components
 const GameView = styled.canvas`
-	/* width: 100vw;
-	height: 100vh; */
-	display: block;
 `;
 
 // Component class
@@ -68,11 +67,15 @@ class GameComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
+			applicationViewId: "appView",
 			stage: new Pixi.Container(),
 			targetDimensions: {
-				width: 1280,
-				height: 720
+				width: 1920,
+				height: 1080
 			},
+			backgroundColor: 55555, // Bright green for now
+			isBackgroundTransparent: false,
+			pixelResolution: 1 // 2 for retina
 		};
 	}
 
@@ -82,20 +85,45 @@ class GameComponent extends React.Component<AllProps, State> {
 
 	componentDidMount() {
 		// Setup PIXI Canvas
-		this.gameView = document.getElementById("gameView") as HTMLCanvasElement,
+		let gameView: HTMLCanvasElement = document.getElementById(this.state.applicationViewId) as HTMLCanvasElement;
 		this.renderer = Pixi.autoDetectRenderer({
+			view: gameView,
 			width: this.state.targetDimensions.width,
 			height: this.state.targetDimensions.height,
-			view: this.gameView
-		}),
+			backgroundColor: this.state.backgroundColor,
+			transparent: this.state.isBackgroundTransparent,
+			resolution: this.state.pixelResolution,
+		});
 		
-		// Apply initial sizing
-		this.state.stage.width = this.state.targetDimensions.width;
-		this.state.stage.height = this.state.targetDimensions.height;
-
 		// Bind listeners for windows resizing
 		window.addEventListener('resize', this.rendererResize);
 		window.addEventListener('deviceOrientation', this.rendererResize);
+
+		// DEBUG
+		var background = new PIXI.Graphics();  
+		background.beginFill(0x123456);  
+		background.drawRect(0,0,1920,1080);  
+		background.endFill();  
+		this.state.stage.addChild(background);
+
+		var square = new PIXI.Graphics();
+		square.beginFill(0xFFFF00);
+		square.lineStyle(5, 0xFF0000);
+		square.drawRect(2.5, 2.5, 250, 250);
+		this.state.stage.addChild(square);
+
+		var basicText = new PIXI.Text('Basic text testing. The quick brown fox jumped over the lazy dog');
+		basicText.x = 50;
+		basicText.y = 100;
+		this.state.stage.addChild(basicText);
+
+		var square2 = new PIXI.Graphics();
+		square2.beginFill(0xFFFF00);
+		square2.lineStyle(5, 0xFFF00F);
+		square2.position.x = (this.state.stage.width / 2) - (square2.width / 2);
+		square2.position.y = (this.state.stage.height / 2) - (square2.height / 2);
+		square2.drawRect(0, 0, 1, 1);
+		this.state.stage.addChild(square2);
 
 		// Initial resize
 		this.rendererResize();
@@ -108,27 +136,33 @@ class GameComponent extends React.Component<AllProps, State> {
 		window.removeEventListener('resize', this.rendererResize);
 		window.removeEventListener('deviceOrientation', this.rendererResize);
 	}
-	
-	
 
 	rendererResize = () => {
-		let width: number = window.innerWidth;
-		let height: number = window.innerHeight;
+		// Get current state of window
+		let curWidth: number = window.innerWidth;
+		let curHeight: number = window.innerHeight;
+		let curPixelRatio: number = window.devicePixelRatio;
 		
-		let newSize = {
-			width: width * window.devicePixelRatio,
-			height: height * window.devicePixelRatio
-		}
-		// newSize.style.width = width + 'px';
-		// newSize.style.height = height + 'px';
+		// Compute actual screen dimensions
+		let screenWidth: number = curWidth * curPixelRatio;
+		let screenHeight: number = curHeight * curPixelRatio;
 
-		this.renderer.resize(newSize.width, newSize.height)
+		// Resize the renderer
+		this.renderer.resize(screenWidth, screenHeight);
 
-		// if (height / targetHeight < width / targetWidth) {
-		// 	scene.scale.x = scene.scale.y = height / targetHeight;
-		// } else {
-		// 	scene.scale.x = scene.scale.y = width / targetWidth;
-		// }
+		// Compute scaling for "NoBorders" scale mode
+		let renderRatio: number = Math.max(screenWidth / this.state.targetDimensions.width, screenHeight / this.state.targetDimensions.height);
+
+		// Scale the root stage to fill the screen
+		this.state.stage.scale.x = this.state.stage.scale.y = renderRatio;
+
+		// Center the root stage on the screen
+		this.state.stage.position.x = (screenWidth - this.state.stage.width) * 0.5;
+		this.state.stage.position.y = (screenHeight - this.state.stage.height) * 0.5;
+
+		// DEBUG
+		console.log(curWidth, curHeight, curPixelRatio, screenWidth, screenHeight);
+		console.log("Screen:", screenWidth, screenHeight, "Stage:", this.state.stage.width, this.state.stage.height, "Stage Pos:", this.state.stage.position.x, this.state.stage.position.y, "Stage Scale:", this.state.stage.scale.x, this.state.stage.scale.y);
 	}
 
 	/**
@@ -142,7 +176,7 @@ class GameComponent extends React.Component<AllProps, State> {
 	
 	render() {
 		return (
-			<GameView id="gameView"/>
+			<GameView id={this.state.applicationViewId} />
 		);
 	}
 }

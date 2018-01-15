@@ -1,12 +1,13 @@
 // Lib Imports
 import * as React from 'react';
 import { render } from 'react-dom';
+import 'normalize.css';
 
 // Local Imports
 import { AppContainer } from './ui/containers/app';
 import { configureStore, history } from './state/store';
 import { APPLICATION_INITIAL_STATE } from './state/application';
-import 'normalize.css';
+import './styles.css';
 
 // App Constants
 export const APP_VERSION: string = "0.1.0";

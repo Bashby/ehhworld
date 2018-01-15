@@ -5,12 +5,15 @@ import { ThunkAction } from 'redux-thunk';
 import { connect } from 'react-redux';
 import { ActionCreator } from 'typescript-fsa';
 
+import styled, { StyledComponentClass } from 'styled-components';
+
 import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux'
 import { Route, Switch, Redirect } from "react-router";
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
+import { GUIOverlayView } from '../styles';
 
 
 // Interfaces
@@ -43,6 +46,11 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 	}
 }
 
+// Styled-components
+const CharacterContainerView = styled(GUIOverlayView)`
+	background-color: yellow;
+`;
+
 // Component class
 class CharacterComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
@@ -53,9 +61,9 @@ class CharacterComponent extends React.Component<AllProps, State> {
 
 	render() {
 		return (
-			<div>
+			<CharacterContainerView>
 				Character Container!
-			</div>
+			</CharacterContainerView>
 		);
 	}
 }

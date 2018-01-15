@@ -13,7 +13,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
-import { GUIOverlayView } from '../styles';
+import { GUIBaseView } from '../styles';
 
 
 // Interfaces
@@ -47,12 +47,15 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 }
 
 // Styled-components
-const InventoryContainerView = styled(GUIOverlayView)`
-	background-color: green;
+const ActionBarContainerView = styled(GUIBaseView)`
+	width: 99.42vw;
+	height: 5vh;
+	bottom: 0.5vh;
+	left: 0.29vw;
 `;
 
 // Component class
-class InventoryComponent extends React.Component<AllProps, State> {
+class ActionBarComponent extends React.Component<AllProps, State> {
 	constructor(props: AllProps) {
 		super(props);
 		this.state = {
@@ -61,15 +64,15 @@ class InventoryComponent extends React.Component<AllProps, State> {
 
 	render() {
 		return (
-			<InventoryContainerView>
-				Inventory Container!
-			</InventoryContainerView>
+			<ActionBarContainerView>
+				ActionBar Container!
+			</ActionBarContainerView>
 		);
 	}
 }
 
 // State-aware container
-export const InventoryContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
+export const ActionBarContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(InventoryComponent);
+)(ActionBarComponent);
