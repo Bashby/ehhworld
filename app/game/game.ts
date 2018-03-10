@@ -9,19 +9,19 @@ import * as Pixi from "pixi.js";
 export class Game {
 	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 	stage: Pixi.Container;
-	
+	fpsMeter: FPSMeter;
+
+	// Game state
 	running: boolean = false;
 	shouldRestart: boolean = false;
 
+	// Game loop vars
 	now: number;
 	deltaTime: number = 0;
 	lastFrameTime: number = performance.now();
 	fps: number = 60.0;
 	step: number = 1.0 / this.fps;
 	MS_PER_UPDATE: number = 10.0;
-
-
-	fpsMeter: FPSMeter;
 
 	constructor(stage: Pixi.Container) {
 		this.stage = stage;

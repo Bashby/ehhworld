@@ -11,7 +11,10 @@ In the root of the project:
 `npm run dev`
 
 ### Docker Building
-> WIP!
+
+Run the following:
+    `cd deploy/`
+    `./start-services.sh`
 
 ## Interacting
 
