@@ -14,5 +14,5 @@ export type UiVisibilityGroup = {
 }
 
 export type AnonymousUiVisibility = UiVisibilityBase;
-export type UiVisibility = UiVisibilityId & UiVisibilityBase;
-export type UiVisibilityUpdate = UiVisibilityId & Partial<UiVisibilityBase>;
+export type UiVisibility = UiVisibilityId & AnonymousUiVisibility;
+export type UiVisibilityUpdate = UiVisibilityId & Partial<AnonymousUiVisibility>;

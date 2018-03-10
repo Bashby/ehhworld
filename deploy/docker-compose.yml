@@ -3,15 +3,18 @@ version: "3"
 networks:
   default:
     external:
-      name: ehh-world-network
+      name: ehh-world-dev-network
 
 services:
-  client:
+  ehhioclient:
+    container_name: ehhioclient
     build:
       context: ..
       dockerfile: ./Dockerfile
-    # command: yarr
-    # volumes:
-    #  - .:/go/src/app
-    # ports:
-    #   - "8080:80"
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 8080:8080
+    volumes:
+      - ../:/usr/src/app
+    command: npm run dev

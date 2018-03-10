@@ -15,6 +15,7 @@ import styled from 'styled-components';
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
+import { Game } from '../../game/game';
 
 
 // Interfaces
@@ -33,8 +34,9 @@ interface MyOwnProps {
 }
 
 interface State {
-	applicationViewId: string,
+	applicationViewId: string
 	stage: Pixi.Container
+	game: Game
 	targetDimensions: {
 		width: number,
 		height: number
@@ -66,9 +68,11 @@ class GameComponent extends React.Component<AllProps, State> {
 
 	constructor(props: AllProps) {
 		super(props);
+		let stage: Pixi.Container = new Pixi.Container();
 		this.state = {
 			applicationViewId: "appView",
-			stage: new Pixi.Container(),
+			stage: stage,
+			game: new Game(stage),
 			targetDimensions: {
 				width: 1920,
 				height: 1080
@@ -80,7 +84,7 @@ class GameComponent extends React.Component<AllProps, State> {
 	}
 
 	componentWillMount() {
-		Pixi.utils.skipHello()
+		Pixi.utils.skipHello() // Don't hate me! :(
 	}
 
 	componentDidMount() {
@@ -94,42 +98,19 @@ class GameComponent extends React.Component<AllProps, State> {
 			transparent: this.state.isBackgroundTransparent,
 			resolution: this.state.pixelResolution,
 		});
+
+		// Create our game instance
+		this.state.game.setRenderer(this.renderer);
 		
 		// Bind listeners for windows resizing
 		window.addEventListener('resize', this.rendererResize);
 		window.addEventListener('deviceOrientation', this.rendererResize);
 
-		// DEBUG
-		var background = new PIXI.Graphics();  
-		background.beginFill(0x123456);  
-		background.drawRect(0,0,1920,1080);  
-		background.endFill();  
-		this.state.stage.addChild(background);
-
-		var square = new PIXI.Graphics();
-		square.beginFill(0xFFFF00);
-		square.lineStyle(5, 0xFF0000);
-		square.drawRect(2.5, 2.5, 250, 250);
-		this.state.stage.addChild(square);
-
-		var basicText = new PIXI.Text('Basic text testing. The quick brown fox jumped over the lazy dog');
-		basicText.x = 50;
-		basicText.y = 100;
-		this.state.stage.addChild(basicText);
-
-		var square2 = new PIXI.Graphics();
-		square2.beginFill(0xFFFF00);
-		square2.lineStyle(5, 0xFFF00F);
-		square2.position.x = (this.state.stage.width / 2) - (square2.width / 2);
-		square2.position.y = (this.state.stage.height / 2) - (square2.height / 2);
-		square2.drawRect(0, 0, 1, 1);
-		this.state.stage.addChild(square2);
-
 		// Initial resize
 		this.rendererResize();
-		
+
 		// Start the game
-		this.animate();
+		this.state.game.start();
 	 }
 
 	componentWillUnmount() {
@@ -161,17 +142,8 @@ class GameComponent extends React.Component<AllProps, State> {
 		this.state.stage.position.y = (screenHeight - this.state.stage.height) * 0.5;
 
 		// DEBUG
-		console.log(curWidth, curHeight, curPixelRatio, screenWidth, screenHeight);
-		console.log("Screen:", screenWidth, screenHeight, "Stage:", this.state.stage.width, this.state.stage.height, "Stage Pos:", this.state.stage.position.x, this.state.stage.position.y, "Stage Scale:", this.state.stage.scale.x, this.state.stage.scale.y);
-	}
-
-	/**
-	* Animation loop for updating Pixi Canvas
-	**/
-	animate = () => {
-		// render the stage container
-		this.renderer.render(this.state.stage);
-		let frame = requestAnimationFrame(this.animate);
+		// console.log(curWidth, curHeight, curPixelRatio, screenWidth, screenHeight);
+		// console.log("Screen:", screenWidth, screenHeight, "Stage:", this.state.stage.width, this.state.stage.height, "Stage Pos:", this.state.stage.position.x, this.state.stage.position.y, "Stage Scale:", this.state.stage.scale.x, this.state.stage.scale.y);
 	}
 	
 	render() {

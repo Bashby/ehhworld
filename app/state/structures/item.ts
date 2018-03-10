@@ -143,5 +143,5 @@ enum ItemSubCategory {
 }
 
 type AnonymousItem = ItemBase & ItemMeta;
-export type Item = ItemId & ItemBase & ItemMeta;
+export type Item = ItemId & AnonymousItem;
 export type ItemUpdate = ItemId & Partial<AnonymousItem>;

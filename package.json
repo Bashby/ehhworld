@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --hot --watch-poll --host 0.0.0.0 --config ./webpack.dev.config.js --progress --colors",
-    "build:prod": "BUILD_CLEAN=true webpack --config ./webpack.prod.config.js --progress --profile --colors"
+    "build": "webpack --config ./webpack.prod.config.js --progress --profile --colors",
+    "serve": "node build/app.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "pretest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   "license": "UNLICENSED",
   "homepage": "https://bitbucket.org/ehhio/ehhworldclient#readme",
   "devDependencies": {
+    "@types/fpsmeter": "^0.3.29",
     "@types/pixi.js": "^4.6.1",
     "@types/react": "^16.0.28",
     "@types/react-dom": "^16.0.3",
@@ -36,6 +40,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^1.1.6",
+    "fpsmeter": "^0.3.1",
     "html-webpack-plugin": "^2.30.1",
     "html-webpack-template": "^6.1.0",
     "image-webpack-loader": "^3.4.2",
