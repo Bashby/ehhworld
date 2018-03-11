@@ -4,12 +4,14 @@ require('fpsmeter');
 import * as Pixi from "pixi.js";
 
 // Local Imports
-
+import { Hub } from '../network';
 
 export class Game {
 	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 	stage: Pixi.Container;
 	fpsMeter: FPSMeter;
+
+	hub: Hub;
 
 	// Game state
 	running: boolean = false;
@@ -25,6 +27,7 @@ export class Game {
 
 	constructor(stage: Pixi.Container) {
 		this.stage = stage;
+		this.hub = new Hub('ws://localhost:8082/ws');
 		
 		// Debug
 		this.debugInit();

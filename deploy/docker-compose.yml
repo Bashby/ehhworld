@@ -6,8 +6,8 @@ networks:
       name: ehh-world-dev-network
 
 services:
-  ehhioclient:
-    container_name: ehhioclient
+  ehhio_client:
+    container_name: ehhio_client
     build:
       context: ..
       dockerfile: ./Dockerfile
