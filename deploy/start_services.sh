@@ -5,6 +5,9 @@ set -Eeuo pipefail
 GREEN='\033[0;32m'
 RESET='\033[0m' # No Color
 
+# Set some configuration
+COMPOSE_IGNORE_ORPHANS="true"
+
 # Create our network, if not already exists
 printf "${GREEN}Checking for docker network 'ehh-world-dev-network' ...${RESET}\n"
 if docker network inspect ehh-world-dev-network > /dev/null; then

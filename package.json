@@ -9,7 +9,8 @@
     "build": "webpack --config ./webpack.prod.config.js --progress --profile --colors",
     "serve": "node build/app.js",
     "lint": "eslint --ignore-path .gitignore .",
-    "pretest": "npm run lint"
+    "pretest": "npm run lint",
+    "generate-protocol-buffers": "pbjs -t static-module -w es6 --es6 -o app/network/message.compiled.js app/network/message.proto && pbts -o app/network/message.compiled.d.ts app/network/message.compiled.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "@types/react-router": "^4.0.19",
     "@types/react-router-dom": "^4.2.3",
     "@types/react-router-redux": "^5.0.10",
+    "@types/ws": "^4.0.1",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
@@ -63,9 +65,7 @@
     "yaml-loader": "^0.5.0"
   },
   "dependencies": {
-    "@types/ws": "^4.0.1",
     "immutable": "^3.8.2",
-    "isomorphic-ws": "^4.0.0",
     "normalize.css": "^7.0.0",
     "pixi.js": "^4.6.2",
     "protobufjs": "^6.8.4",
@@ -78,7 +78,6 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^2.3.0",
-    "ws": "^5.0.0"
+    "styled-components": "^2.3.0"
   }
 }

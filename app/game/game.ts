@@ -27,7 +27,7 @@ export class Game {
 
 	constructor(stage: Pixi.Container) {
 		this.stage = stage;
-		this.hub = new Hub('ws://localhost:8082/ws');
+		this.hub = new Hub('ws://localhost:8081/ws');
 		
 		// Debug
 		this.debugInit();
