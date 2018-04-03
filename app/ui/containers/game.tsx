@@ -1,5 +1,6 @@
 // Lib Imports
 import * as React from 'react';
+import { isEqual } from 'lodash';
 import { Dispatch, bindActionCreators } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { connect } from 'react-redux';
@@ -16,13 +17,14 @@ import styled from 'styled-components';
 // Local Imports
 import { IApplicationState } from '../../state/application';
 import { Game } from '../../game/game';
+import { IInputState } from '../../state/reducers/input';
 
 
 // Interfaces
 interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
 
 interface MyStateProps {
-
+	inputState: IInputState
 }
 
 interface MyDispatchProps {
@@ -37,6 +39,7 @@ interface State {
 	applicationViewId: string
 	stage: Pixi.Container
 	game: Game
+	inputDirty: boolean
 	targetDimensions: {
 		width: number,
 		height: number
@@ -49,6 +52,7 @@ interface State {
 // State mappings
 function mapStateToProps(state: IApplicationState): MyStateProps {
 	return {
+		inputState: state.inputState
 	}
 }
 
@@ -73,6 +77,7 @@ class GameComponent extends React.Component<AllProps, State> {
 			applicationViewId: "appView",
 			stage: stage,
 			game: new Game(stage),
+			inputDirty: false,
 			targetDimensions: {
 				width: 1920,
 				height: 1080
@@ -116,6 +121,17 @@ class GameComponent extends React.Component<AllProps, State> {
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.rendererResize);
 		window.removeEventListener('deviceOrientation', this.rendererResize);
+	}
+
+	componentWillUpdate(nextProps) {
+		this.handleIncomingInput(nextProps.inputState);
+	}
+
+	handleIncomingInput(newInput): void {
+		if (!isEqual(newInput, this.props.inputState)) {
+			// Update game state
+			this.state.game.input.setInputState(newInput);
+		}
 	}
 
 	rendererResize = () => {

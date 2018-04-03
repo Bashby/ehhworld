@@ -8,13 +8,12 @@ import { IApplicationState } from '../application';
 
 
 // Prepare action creator
-const UiActionCreator = actionCreatorFactory("UI");
-const actionCreator = actionCreatorFactory();
+const UIActionCreator = actionCreatorFactory("UI");
 
 // Create actions
-const SetVisibility = UiActionCreator<UiVisibilityUpdate>('SET_VISIBILITY');
-const ToggleVisibility = UiActionCreator<string>('TOGGLE_VISIBILITY');
-const ToggleVisibilityVisGroup = UiActionCreator.async<
+const SetVisibility = UIActionCreator<UiVisibilityUpdate>('SET_VISIBILITY');
+const ToggleVisibility = UIActionCreator<string>('TOGGLE_VISIBILITY');
+const ToggleVisibilityVisGroup = UIActionCreator.async<
 	IApplicationState,
 	{ id: string, visGroups?: string[] }, // input parameter type
 	void,
@@ -72,7 +71,7 @@ const toggleVisibilityVisGroupWorker = bindThunkAction(ToggleVisibilityVisGroup,
 )
 
 // Bundle and export action creators
-export const UiActionCreators = {
+export const UIActionCreators = {
 	setVisibility: SetVisibility,
 	toggleVisibility: ToggleVisibility,
 	toggleVisibilityVisGroup: toggleVisibilityVisGroupWorker,

@@ -15,7 +15,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 // Local Imports
 import { IApplicationState } from '../../state/application';
-import { UiActionCreators } from '../../state/actions/ui';
+import { UIActionCreators } from '../../state/actions/ui';
 import { AnonymousUiVisibility } from '../../state/structures/ui';
 import { CharacterContainer } from './character';
 import { WorldMapContainer } from './worldmap';

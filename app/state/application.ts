@@ -5,6 +5,7 @@ import { Reducer, combineReducers } from "redux";
 import { IPlayerState, PLAYER_INITIAL_STATE, playerReducer } from "./reducers/player";
 import { IInventoryState, INVENTORY_INITIAL_STATE, inventoryReducer } from "./reducers/inventory";
 import { IUiState, UI_INITIAL_STATE, uiReducer } from "./reducers/ui";
+import { IInputState, INPUT_INITIAL_STATE, inputReducer } from "./reducers/input";
 
 
 // Entire Application state interface
@@ -12,6 +13,7 @@ export interface IApplicationState {
 	playerState: IPlayerState
 	inventoryState: IInventoryState
 	uiState: IUiState
+	inputState: IInputState
 	// minimapState: IMinimapState
 };
 
@@ -20,6 +22,7 @@ export const APPLICATION_INITIAL_STATE: IApplicationState = {
 	playerState: PLAYER_INITIAL_STATE,
 	inventoryState: INVENTORY_INITIAL_STATE,
 	uiState: UI_INITIAL_STATE,
+	inputState: INPUT_INITIAL_STATE,
 	// minimapState: MINIMAP_INITIAL_STATE,
 }
 
@@ -28,5 +31,6 @@ export const applicationReducer: Reducer<IApplicationState> = combineReducers<IA
 	playerState: playerReducer,
 	inventoryState: inventoryReducer,
 	uiState: uiReducer,
+	inputState: inputReducer,
 	// minimapState: minimapReducer
 });

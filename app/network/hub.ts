@@ -1,14 +1,19 @@
+
+// Local Imports
 import { MessageHandler } from './message';
 import { protobuf as message } from './message.compiled';
+import { Queue } from '../game/util';
 
 export class Hub {
     ws: WebSocket;
     handler: MessageHandler;
+    queue: Queue;
 
-    constructor(url: string) {
-        // Bind handler ????????????
-        //this.handler = new MessageHandler(this.send);
+    constructor() {
+        // this.handler = new MessageHandler();
+    }
 
+    connect(url: string) {
         // Create and bind to websocket
         this.ws = new WebSocket(url);
         this.ws.onopen = this.onOpen

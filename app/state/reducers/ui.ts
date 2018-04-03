@@ -3,7 +3,7 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import { fromJS } from "immutable";
 
 // Local Imports
-import { UiActionCreators } from "../actions/ui";
+import { UIActionCreators } from "../actions/ui";
 import { Item } from "../structures/item";
 import { UiVisibilityGroup, AnonymousUiVisibility } from "../structures/ui";
 
@@ -48,7 +48,7 @@ export const UI_INITIAL_STATE: IUiState = {
 
 // UI state reducer
 export const uiReducer = reducerWithInitialState(UI_INITIAL_STATE)
-	.case(UiActionCreators.setVisibility, (state, payload) => {
+	.case(UIActionCreators.setVisibility, (state, payload) => {
 		// Short, if you didn't give me anything useful
 		if (payload.visible === undefined) {
 			return state
@@ -67,7 +67,7 @@ export const uiReducer = reducerWithInitialState(UI_INITIAL_STATE)
 
 		return newState;
 	})
-	.case(UiActionCreators.toggleVisibility, (state, payload) => {
+	.case(UIActionCreators.toggleVisibility, (state, payload) => {
 		// Toggle top-level visibility if global
 		if (payload == 'global') {
 			return {

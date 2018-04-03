@@ -16,7 +16,8 @@ import styled from 'styled-components';
 // Local Imports
 import { IApplicationState } from '../../state/application';
 import { GameContainer } from './game';
-import { UiActionCreators } from '../../state/actions/ui';
+import { UIActionCreators } from '../../state/actions/ui';
+import { InputActionCreators } from '../../state/actions/input';
 import { GUIContainer } from './gui';
 
 
@@ -30,6 +31,7 @@ interface MyStateProps {
 interface MyDispatchProps {
 	toggleVisibility: any
 	toggleVisibilityVisGroup: any
+	setInput: any
 }
 
 interface MyOwnProps {
@@ -50,8 +52,9 @@ function mapStateToProps(state: IApplicationState): MyStateProps {
 
 function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
 	return {
-		toggleVisibilityVisGroup: bindActionCreators(UiActionCreators.toggleVisibilityVisGroup, dispatch),
-		toggleVisibility: bindActionCreators(UiActionCreators.toggleVisibility, dispatch),
+		toggleVisibilityVisGroup: bindActionCreators(UIActionCreators.toggleVisibilityVisGroup, dispatch),
+		toggleVisibility: bindActionCreators(UIActionCreators.toggleVisibility, dispatch),
+		setInput: bindActionCreators(InputActionCreators, dispatch),
 	}
 }
 
@@ -69,6 +72,20 @@ const keyMap = {
 	UI_VISIBILITY_TOGGLE_QuestLog: ['l', 'L'],
 	UI_VISIBILITY_TOGGLE_Social: ['o', 'O'],
 	UI_VISIBILITY_TOGGLE_Crafting: ['p', 'P'],
+	INPUT_KEYDOWN_LEFT: [{sequence: 'a', action: 'keydown'}, {sequence: 'left', action: 'keydown'}],
+	INPUT_KEYUP_LEFT: [{sequence: 'a', action: 'keyup'}, {sequence: 'left', action: 'keyup'}],
+	INPUT_KEYDOWN_RIGHT: [{sequence: 'd', action: 'keydown'}, {sequence: 'right', action: 'keydown'}],
+	INPUT_KEYUP_RIGHT: [{sequence: 'd', action: 'keyup'}, {sequence: 'right', action: 'keyup'}],
+	INPUT_KEYDOWN_UP: [{sequence: 'w', action: 'keydown'}, {sequence: 'up', action: 'keydown'}],
+	INPUT_KEYUP_UP: [{sequence: 'w', action: 'keyup'}, {sequence: 'up', action: 'keyup'}],
+	INPUT_KEYDOWN_DOWN: [{sequence: 's', action: 'keydown'}, {sequence: 'down', action: 'keydown'}],
+	INPUT_KEYUP_DOWN: [{sequence: 's', action: 'keyup'}, {sequence: 'down', action: 'keyup'}],
+	INPUT_KEYDOWN_SHIFT: [{sequence: 'shift', action: 'keydown'}, {sequence: 'shift', action: 'keydown'}],
+	INPUT_KEYUP_SHIFT: [{sequence: 'shift', action: 'keyup'}, {sequence: 'shift', action: 'keyup'}],
+	// INPUT_SET_RIGHT: ['d', 'right'],
+	// INPUT_SET_UP: ['w', 'up'],
+	// INPUT_SET_DOWN: ['s', 'down'],
+	// INPUT_SET_SHIFT: ['shift'],
 };
 
 // Styled-componenets
@@ -110,6 +127,17 @@ class AppComponent extends React.Component<AllProps, State> {
 		'UI_VISIBILITY_TOGGLE_QuestLog': (event) => {this.props.toggleVisibilityVisGroup({id: 'questlog'})},
 		'UI_VISIBILITY_TOGGLE_Social': (event) => {this.props.toggleVisibilityVisGroup({id: 'social'})},
 		'UI_VISIBILITY_TOGGLE_Crafting': (event) => {this.props.toggleVisibilityVisGroup({id: 'crafting'})},
+		// Input Handlers
+		'INPUT_KEYDOWN_LEFT': (event) => {this.props.setInput.setLeft(true)},
+		'INPUT_KEYUP_LEFT': (event) => {this.props.setInput.setLeft(false)},
+		'INPUT_KEYDOWN_RIGHT': (event) => {this.props.setInput.setRight(true)},
+		'INPUT_KEYUP_RIGHT': (event) => {this.props.setInput.setRight(false)},
+		'INPUT_KEYDOWN_UP': (event) => {this.props.setInput.setUp(true)},
+		'INPUT_KEYUP_UP': (event) => {this.props.setInput.setUp(false)},
+		'INPUT_KEYDOWN_DOWN': (event) => {this.props.setInput.setDown(true)},
+		'INPUT_KEYUP_DOWN': (event) => {this.props.setInput.setDown(false)},
+		'INPUT_KEYDOWN_SHIFT': (event) => {this.props.setInput.setShift(true)},
+		'INPUT_KEYUP_SHIFT': (event) => {this.props.setInput.setShift(false)},
 		// '': (event) => {},
 		// '': (event) => {},
 		// '': (event) => {},

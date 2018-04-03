@@ -1,17 +1,24 @@
 // Lib Imports
 require('fpsmeter');
-
 import * as Pixi from "pixi.js";
 
 // Local Imports
 import { Hub } from '../network';
+import { ObjectManager } from './object';
+import { IInputState } from "../state/reducers/input";
+import { InputManager } from "./input";
+import { Player } from "./object/player";
+
 
 export class Game {
 	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 	stage: Pixi.Container;
-	fpsMeter: FPSMeter;
+	fpsMeter: FPSMeter = new FPSMeter();
 
-	hub: Hub;
+	// Sub-system Managers
+	network: Hub;
+	objects: ObjectManager;
+	input: InputManager
 
 	// Game state
 	running: boolean = false;
@@ -21,22 +28,24 @@ export class Game {
 	now: number;
 	deltaTime: number = 0;
 	lastFrameTime: number = performance.now();
-	fps: number = 60.0;
-	step: number = 1.0 / this.fps;
+	// FPS: number = 60.0;
+	// step: number = 1.0 / this.FPS;
 	MS_PER_UPDATE: number = 10.0;
 
 	constructor(stage: Pixi.Container) {
 		this.stage = stage;
-		this.hub = new Hub('ws://localhost:8081/ws');
+
+		// Init Sub-systems
+		this.objects = new ObjectManager(this);
+		this.input = new InputManager();
+		this.network = new Hub()
+		this.network.connect('ws://localhost:8081/ws');
 		
 		// Debug
 		this.debugInit();
 	}
 
 	debugInit() {
-		// Start a FPS monitor
-		this.fpsMeter = new FPSMeter();
-
 		// Put some stuff into the stage
 		var background = new PIXI.Graphics();  
 		background.beginFill(0x123456);  
@@ -44,11 +53,11 @@ export class Game {
 		background.endFill();  
 		this.stage.addChild(background);
 
-		var square = new PIXI.Graphics();
-		square.beginFill(0xFFFF00);
-		square.lineStyle(5, 0xFF0000);
-		square.drawRect(2.5, 2.5, 250, 250);
-		this.stage.addChild(square);
+		// var square = new PIXI.Graphics();
+		// square.beginFill(0xFFFF00);
+		// square.lineStyle(5, 0xFF0000);
+		// square.drawRect(2.5, 2.5, 250, 250);
+		// this.stage.addChild(square);
 
 		var basicText = new PIXI.Text('Basic text testing. The quick brown fox jumped over the lazy dog');
 		basicText.x = 50;
@@ -62,6 +71,9 @@ export class Game {
 		square2.position.y = (this.stage.height / 2) - (square2.height / 2);
 		square2.drawRect(0, 0, 1, 1);
 		this.stage.addChild(square2);
+
+		// Simulate a player object
+		this.objects.createPlayer();
 	}
 
 	setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
@@ -119,5 +131,6 @@ export class Game {
 	}
 
 	update(dt: number) {
+		this.objects.step(dt);
 	}
 }
