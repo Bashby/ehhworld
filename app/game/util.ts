@@ -39,15 +39,25 @@ export class Queue {
     }
 }
 
-export function applyMixins(derivedCtor: any, baseCtors: any[]) {
-    console.log('called');
-    baseCtors.forEach(baseCtor => {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
-        });
-    });
-}
+// export function applyMixins(derivedCtor: any, baseCtors: any[]) {
+//     baseCtors.forEach(baseCtor => {
+//         Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+//             derivedCtor.prototype[name] = baseCtor.prototype[name];
+//         });
+//     });
+// }
 
 export function clamp(max: number, min: number, val: number) {
     return Math.max(min, Math.min(max, val));
+}
+
+export interface SimpleDirectionVector {
+    x: DirectionVectorValue
+    y: DirectionVectorValue
+}
+
+export enum DirectionVectorValue {
+    Position = 1,
+    Negative = -1,
+    Zero = 0
 }

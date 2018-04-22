@@ -8,21 +8,32 @@ import { ObjectManager } from './object';
 import { IInputState } from "../state/reducers/input";
 import { InputManager } from "./input";
 import { Player } from "./object/player";
+import { Viewport } from "./viewport";
+
+// Constants TODO: Replace with a config system
+const SERVER_HOST: string = 'localhost';
+const SERVER_PROTOCOL: string = 'ws';
+const SERVER_PORT: number = 8081
+const SERVER_PATH: string = 'ws';
+const SERVER_CONNECT_PATH: string = `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/${SERVER_PATH}`
 
 
 export class Game {
+	// Rendering
 	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 	stage: Pixi.Container;
 	fpsMeter: FPSMeter = new FPSMeter();
 
 	// Sub-system Managers
-	network: Hub;
-	objects: ObjectManager;
+	network: Hub
+	objects: ObjectManager
 	input: InputManager
+	viewport: Viewport
 
 	// Game state
 	running: boolean = false;
 	shouldRestart: boolean = false;
+	debug: boolean = true;
 
 	// Game loop vars
 	now: number;
@@ -37,43 +48,9 @@ export class Game {
 
 		// Init Sub-systems
 		this.objects = new ObjectManager(this);
-		this.input = new InputManager();
+		this.input = new InputManager(this);
 		this.network = new Hub()
-		this.network.connect('ws://localhost:8081/ws');
-		
-		// Debug
-		this.debugInit();
-	}
-
-	debugInit() {
-		// Put some stuff into the stage
-		var background = new PIXI.Graphics();  
-		background.beginFill(0x123456);  
-		background.drawRect(0,0,1920,1080);  
-		background.endFill();  
-		this.stage.addChild(background);
-
-		// var square = new PIXI.Graphics();
-		// square.beginFill(0xFFFF00);
-		// square.lineStyle(5, 0xFF0000);
-		// square.drawRect(2.5, 2.5, 250, 250);
-		// this.stage.addChild(square);
-
-		var basicText = new PIXI.Text('Basic text testing. The quick brown fox jumped over the lazy dog');
-		basicText.x = 50;
-		basicText.y = 100;
-		this.stage.addChild(basicText);
-
-		var square2 = new PIXI.Graphics();
-		square2.beginFill(0xFFFF00);
-		square2.lineStyle(5, 0xFFF00F);
-		square2.position.x = (this.stage.width / 2) - (square2.width / 2);
-		square2.position.y = (this.stage.height / 2) - (square2.height / 2);
-		square2.drawRect(0, 0, 1, 1);
-		this.stage.addChild(square2);
-
-		// Simulate a player object
-		this.objects.createPlayer();
+		this.network.connect(SERVER_CONNECT_PATH);
 	}
 
 	setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {

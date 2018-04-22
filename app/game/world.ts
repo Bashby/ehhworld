@@ -1,9 +1,9 @@
 export interface IWorldPosition {
 	x: number
 	y: number
-	d: number // 0 - 359 degrees; 0 is facing north
+	r: number // radians
 }
 
 export function RandomWorldPosition(): IWorldPosition {
-    return {x: 0, y: 0, d: 0}
+    return {x: 0, y: 0, r: 0}
 }

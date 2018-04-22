@@ -1,4 +1,11 @@
+// Lib Imports
+import * as Pixi from "pixi.js";
+
+// Local Imports
 import { IInputState } from "../state/reducers/input";
+import { Game } from "./game";
+import { SimpleDirectionVector, DirectionVectorValue } from "./util";
+
 
 export class InputManager {
     inputState: IInputState = {
@@ -8,9 +15,12 @@ export class InputManager {
         down: false,
         shift: false,
     }
-    directionVector: SimpleVector = {x: 0, y: 0}
+    directionVector: SimpleDirectionVector = { x: DirectionVectorValue.Zero, y: DirectionVectorValue.Zero }
+    getMousePosition: () => Pixi.Point
 
-    constructor() {}
+    constructor(game: Game) {
+        this.getMousePosition = () => game.renderer.plugins.interaction.mouse.global;
+    }
 
     setInputState(newState: IInputState) {
         this.inputState = newState;
@@ -38,16 +48,13 @@ export class InputManager {
     getState(): IInputManagerState {
         return {
             ...this.inputState,
-            directionVector: this.directionVector
+            directionVector: this.directionVector,
+            mousePosition: this.getMousePosition(),
         }
     }
 }
 
-interface SimpleVector {
-    x: number
-    y: number
-}
-
 export interface IInputManagerState extends IInputState {
-    directionVector: SimpleVector
+    directionVector: SimpleDirectionVector
+    mousePosition: Pixi.Point
 }
