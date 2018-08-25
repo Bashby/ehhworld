@@ -34,13 +34,6 @@ module.exports = merge(CommonWebpackConfig, {
     ]
   },
   plugins: [
-    // Set environment variables
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-
     // Build Index.html
     new HtmlWebpackPlugin({
       inject: false,

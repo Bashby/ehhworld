@@ -60,8 +60,16 @@ export class Game {
         this.fpsMeterView = view;
     }
 
-    public start() {
-        this.texture.init(this.loopStart.bind(this));
+    public async start() {
+        // Load in resources
+        await this.sound.init();
+        await this.texture.init();
+
+        // Add player
+        this.objects.createPlayer();
+
+        // Start the game loop
+        this.loopStart();
     }
 
     public loopStart() {

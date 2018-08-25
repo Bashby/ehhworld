@@ -12,9 +12,22 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
+      # Generic
       - NODE_ENV=development
+      - DEBUG=false
+      - NPM_PACKAGE_VERSION=${NPM_PACKAGE_VERSION:-?}
+
+      # Rendering
+      - RENDER_TARGET_FPS=75
+
+      # Backend server
+      - SERVER_PROTOCOL=ws
+      - SERVER_HOST=localhost
+      - SERVER_PORT=8081
+      - SERVER_BASE_PATH=/
     ports:
       - 8080:8080
+      - 9091:9091
     volumes:
       - ./:/usr/src/app
     command: npm run dev

@@ -19,13 +19,6 @@ module.exports = merge(CommonWebpackConfig, {
     publicPath: '/',
   },
   plugins: [
-    // Set environment variables
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
-
     // Build Index.html
     new HtmlWebpackPlugin({
       inject: false,
@@ -68,5 +61,13 @@ module.exports = merge(CommonWebpackConfig, {
   serve: {
     host: '0.0.0.0',
     port: 8080,
+    clipboard: false,
+    hotClient: {
+      host: {
+        client: 'localhost',
+        server: '0.0.0.0'
+      },
+      port: 9091,
+    }
   }
 });

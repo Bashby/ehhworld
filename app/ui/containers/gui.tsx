@@ -64,16 +64,16 @@ class GUIComponent extends Component<IAllProps, IState> {
         super(props);
 
         this.uiContainerMapping = {
-            actionbar: <ActionBarContainer />,
-            character: <CharacterContainer />,
-            chat: <ChatContainer />,
-            crafting: <CraftingContainer />,
-            eventlog: <EventLogContainer />,
-            inventory: <InventoryContainer />,
-            minimap: <MiniMapContainer />,
-            questlog: <QuestLogContainer />,
-            social: <SocialContainer />,
-            worldmap: <WorldMapContainer />,
+            actionbar: <ActionBarContainer key={"actionbar"} />,
+            character: <CharacterContainer key={"character"} />,
+            chat: <ChatContainer key={"chat"} />,
+            crafting: <CraftingContainer key={"crafting"} />,
+            eventlog: <EventLogContainer key={"eventlog"} />,
+            inventory: <InventoryContainer key={"inventory"} />,
+            minimap: <MiniMapContainer key={"minimap"} />,
+            questlog: <QuestLogContainer key={"questlog"} />,
+            social: <SocialContainer key={"social"} />,
+            worldmap: <WorldMapContainer key={"worldmap"} />,
         };
 
         this.state = {

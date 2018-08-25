@@ -130,6 +130,18 @@ module.exports = {
     }
   },
   plugins: [
+    // Set environment variables
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'DEBUG',
+      'NPM_PACKAGE_VERSION',
+      'RENDER_TARGET_FPS',
+      'SERVER_PROTOCOL',
+      'SERVER_HOST',
+      'SERVER_PORT',
+      'SERVER_BASE_PATH'
+    ]),
+
     new MiniCssExtractPlugin({
       filename: DEV_MODE ? '[name].css' : '[name].[hash].css',
       chunkFilename: DEV_MODE ? '[id].css' : '[id].[hash].css',

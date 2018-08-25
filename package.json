@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-serve --require babel-register --config ./webpack.dev.config.babel.js",
+    "dev": "./node_modules/.bin/webpack-serve --no-clipboard --require babel-register --config ./webpack.dev.config.babel.js",
     "build": "webpack --config ./webpack.prod.config.babel.js --progress --profile --colors",
     "serve": "node build/app.js",
     "lint": "tslint ./app/**/*.{ts,tsx}",

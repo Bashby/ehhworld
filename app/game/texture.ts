@@ -2,14 +2,11 @@
 import * as Pixi from "pixi.js";
 
 // Local imports
-// const json = require();
-// import '../asset/sprite/test.json';
 
 export class TextureManager {
-  // constructor() {}
+  constructor() {}
 
-  public init(cb) {
-    PIXI.loader.add("test", "../asset/sprite/test.json")
-      .load(cb);
+  public init() {
+    Pixi.loader.add("test", "../asset/image/sprite/test.json").load();
   }
 }
