@@ -51,12 +51,12 @@ export function clamp(max: number, min: number, val: number) {
     return Math.max(min, Math.min(max, val));
 }
 
-export interface SimpleDirectionVector {
-    x: DirectionVectorValue
-    y: DirectionVectorValue
+export interface UnitVector {
+    x: UnitVectorValue
+    y: UnitVectorValue
 }
 
-export enum DirectionVectorValue {
+export enum UnitVectorValue {
     Position = 1,
     Negative = -1,
     Zero = 0

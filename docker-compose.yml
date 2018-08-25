@@ -9,12 +9,12 @@ services:
   ehhio_client:
     container_name: ehhio_client
     build:
-      context: ..
+      context: .
       dockerfile: ./Dockerfile
     environment:
       - NODE_ENV=development
     ports:
       - 8080:8080
     volumes:
-      - ../:/usr/src/app
+      - ./:/usr/src/app
     command: npm run dev

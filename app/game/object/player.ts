@@ -1,53 +1,140 @@
 // Lib Imports
 import * as Pixi from "pixi.js";
+import { OutlineFilter } from 'pixi-filters';
 
 // Local Imports
 import { IWorldPosition, RandomWorldPosition } from "../world";
-import { Damageable, Movable, Renderable, MouseAware } from "./mixins";
 import { GameObject } from "./base";
 import { IInputState } from "../../state/reducers/input";
 import { Game } from "../game";
 import { IInputManagerState } from "../input";
-
-// Mixins
-const MouseAwareMovableDamageableRenderableGameObject = MouseAware(Movable(Damageable(Renderable(GameObject))));
+import { clamp, SimpleDirectionVector, DirectionVectorValue } from "../util";
 
 
-export class Player extends MouseAwareMovableDamageableRenderableGameObject {
+export class Player extends GameObject {
+    position: Pixi.Point;
+    lastPosition: Pixi.Point;
+    speed: number = 0.1;
+    SPEED_MAX: number = 1;
+    SPEED_MIN: number = 0;
+    direction: SimpleDirectionVector = { x: DirectionVectorValue.Zero, y: DirectionVectorValue.Zero }
+    rotation: number = 0;
+    lastRotation: number = 0;
+    renderTarget: Pixi.Container;
+    displayObject: Pixi.Graphics = new Pixi.Graphics();
+
     constructor(game: Game) {
         super(game);
+
+        this.renderTarget = this.game.stage;
+        this.renderTarget.addChild(this.displayObject);
+
+        console.log(PIXI.utils.TextureCache);
+        let textures = [
+            PIXI.utils.TextureCache["tile000.png"],
+            PIXI.utils.TextureCache["tile001.png"],
+            PIXI.utils.TextureCache["tile002.png"],
+            PIXI.utils.TextureCache["tile003.png"],
+            PIXI.utils.TextureCache["tile004.png"],
+            PIXI.utils.TextureCache["tile005.png"],
+            PIXI.utils.TextureCache["tile006.png"],
+            PIXI.utils.TextureCache["tile007.png"],
+            PIXI.utils.TextureCache["tile008.png"],
+            PIXI.utils.TextureCache["tile009.png"],
+        ];
+        let textures2 = [
+            PIXI.utils.TextureCache["tile010.png"],
+            PIXI.utils.TextureCache["tile011.png"],
+            PIXI.utils.TextureCache["tile012.png"],
+            PIXI.utils.TextureCache["tile013.png"],
+            PIXI.utils.TextureCache["tile014.png"],
+            PIXI.utils.TextureCache["tile015.png"],
+            PIXI.utils.TextureCache["tile016.png"],
+            PIXI.utils.TextureCache["tile017.png"],
+            PIXI.utils.TextureCache["tile018.png"],
+            PIXI.utils.TextureCache["tile019.png"],
+        ];
+        let textures3 = [
+            PIXI.utils.TextureCache["tile020.png"],
+            PIXI.utils.TextureCache["tile021.png"],
+            PIXI.utils.TextureCache["tile022.png"],
+            PIXI.utils.TextureCache["tile023.png"],
+            PIXI.utils.TextureCache["tile024.png"],
+            PIXI.utils.TextureCache["tile025.png"],
+            PIXI.utils.TextureCache["tile026.png"],
+            PIXI.utils.TextureCache["tile027.png"],
+            PIXI.utils.TextureCache["tile028.png"],
+            PIXI.utils.TextureCache["tile029.png"],
+        ];
+        // let sprite = new PIXI.Sprite(
+        //     PIXI.utils.TextureCache["tile000.png"]
+        //   );
+        let sprite = new PIXI.extras.AnimatedSprite(textures);
+        let sprite2 = new PIXI.extras.AnimatedSprite(textures2);
+        let sprite3 = new PIXI.extras.AnimatedSprite(textures3);
+        sprite.animationSpeed = 0.1;
+        sprite2.animationSpeed = 0.1;
+        sprite3.animationSpeed = 0.1;
+        sprite.scale = new Pixi.Point(5,5);
+        sprite2.scale = new Pixi.Point(5,5);
+        sprite3.scale = new Pixi.Point(5,5);
+        sprite.filters = [new OutlineFilter(5, 0xFF0000)];
+        sprite.play();
+        sprite2.play();
+        sprite3.play();
+        sprite3.position.x = (this.renderTarget.width / 2 - 80);
+        sprite3.position.y = (this.renderTarget.height / 2 - 80);
+        sprite2.position.x = (this.renderTarget.width / 2 + 80);
+        sprite2.position.y = (this.renderTarget.height / 2 + 80);
+        sprite.position.x = (this.renderTarget.width / 2);
+        sprite.position.y = (this.renderTarget.height / 2);
+        this.renderTarget.addChild(sprite);
+        this.renderTarget.addChild(sprite2);
+        this.renderTarget.addChild(sprite3);
+
         this.init();
     }
 
     init() {
         this.displayObject.beginFill(0xFFFF00);
-        this.displayObject.lineStyle(1, 0xFF0000);
+        this.displayObject.lineStyle(5, 0xFF0000);
+        this.displayObject.drawRect(-50, -50, 100, 100);
         this.displayObject.pivot.set(0.5, 0.5);
         this.displayObject.position.x = (this.renderTarget.width / 2);
         this.displayObject.position.y = (this.renderTarget.height / 2);
-        this.displayObject.drawRect(-10, -10, 20, 20);
 
         this.position = this.displayObject.position as Pixi.Point;
+        this.lastPosition = this.position;
     }
 
     update(dt: number) {
-        // Prepare state
-        let state = this.game.input.getState();
-        this.direction = state.directionVector;
-        if (state.shift) {
+        // Handle Input
+        let inputState = this.game.input.getState();
+        this.direction = inputState.directionVector;
+        if (inputState.shift) {
             this.speed = 0.3;
         } else {
             this.speed = 0.1;
         }
-        let globalPos = this.renderTarget.toGlobal(this.position);
-        this.angle = Math.atan2(state.mousePosition.y - globalPos.y, state.mousePosition.x - globalPos.x);
-        
-        // Compute
-        super.update(dt);
 
-        // Update
-        this.displayObject.position = new Pixi.Point(this.position.x, this.position.y);
-        this.displayObject.rotation = this.angle;
+        // Calculate
+        this.lastPosition = this.position;
+        this.lastRotation = this.rotation;
+        let clampedSpeed = clamp(this.SPEED_MAX, this.SPEED_MIN, this.speed);
+        this.position.x += this.direction.x * clampedSpeed * dt;
+        this.position.y += this.direction.y * clampedSpeed * dt;
+        let globalPos = this.renderTarget.toGlobal(this.position);
+        this.rotation = Math.atan2(inputState.mousePosition.y - globalPos.y, inputState.mousePosition.x - globalPos.x);
+    }
+
+    draw(interp: number) {
+        // Render
+        this.displayObject.position.x = this.lastPosition.x + (this.position.x - this.lastPosition.x) * interp;
+        this.displayObject.position.y = this.lastPosition.y + (this.position.y - this.lastPosition.y) * interp;
+        let negRot: boolean = this.rotation < 0;
+        let absRotation = (Math.abs(this.rotation) - Math.abs(this.lastRotation)) * interp;
+        this.displayObject.rotation = this.lastRotation + (negRot ? absRotation * -1 : absRotation);
+        //console.log(this.displayObject.rotation, absRotation);
     }
 }
 

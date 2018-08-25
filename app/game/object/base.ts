@@ -3,31 +3,36 @@ import * as Pixi from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
 
 // Local Imports
-import { IGameObject } from "../object";
 import { Game } from "../game";
 import { IWorldPosition } from '../world';
 
+export interface IBaseObject {
+    id: string
+}
 
-export class BaseObject {
+export class BaseObject implements IBaseObject {
     id: string = uuidv4(); // uuid
 
     constructor() {}
+}
 
-    update(dt: number) {}
+export interface IGameObject extends IBaseObject {
+    game: Game
+    update(dt: number): void
+    draw(interp: number): void
 }
 
 export class GameObject extends BaseObject implements IGameObject {
     game: Game
-    position: Pixi.Point;
 
     constructor(game: Game) {
         super()
         this.game = game;
     }
 
-    // render() function as well with DT support?
+    update(dt: number) {}
+    draw(interp: number) {}
 }
-
 
 
 
@@ -69,5 +74,3 @@ export class GameObject extends BaseObject implements IGameObject {
     //         }
     //     }
     // }
-
-    

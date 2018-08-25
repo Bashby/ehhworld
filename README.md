@@ -7,15 +7,15 @@ Client code (Node/React/PixiJS) for interacting with EhhWorld.
 ### Local Building
 
 In the root of the project:
-`npm install`
-`npm run dev`
+    `npm install`
+    `npm run dev`
 
 ### Docker Building
 
-Run the following:
-    `cd deploy/`
-    `./start-services.sh`
+> Note: you may need to create the development docker network via `docker network create ehh-world-dev-network`
+
+    `docker-compose up --build ehhio_client`
 
 ## Interacting
 
-Then, navigate to `localhost:8080`.
+Then, navigate to `localhost:8080` in your browser.

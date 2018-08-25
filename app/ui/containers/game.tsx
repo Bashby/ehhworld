@@ -37,6 +37,7 @@ interface MyOwnProps {
 
 interface State {
 	applicationViewId: string
+	fpsViewId: string
 	stage: Pixi.Container
 	game: Game
 	inputDirty: boolean
@@ -47,6 +48,7 @@ interface State {
 	backgroundColor: number
 	isBackgroundTransparent: boolean
 	pixelResolution: number
+	useRoundPixels: boolean
 }
 
 // State mappings
@@ -64,6 +66,12 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchPr
 // Styled-components
 const GameView = styled.canvas`
 `;
+const FPSMeterView = styled.div`
+	position: absolute;
+	top: 1vh;
+	left: 1vw;
+	z-index: 10;
+`;
 
 // Component class
 class GameComponent extends React.Component<AllProps, State> {
@@ -75,6 +83,7 @@ class GameComponent extends React.Component<AllProps, State> {
 		let stage: Pixi.Container = new Pixi.Container();
 		this.state = {
 			applicationViewId: "appView",
+			fpsViewId: "fpsMeter",
 			stage: stage,
 			game: new Game(stage),
 			inputDirty: false,
@@ -84,7 +93,8 @@ class GameComponent extends React.Component<AllProps, State> {
 			},
 			backgroundColor: 55555, // Bright green for now
 			isBackgroundTransparent: false,
-			pixelResolution: 1 // 2 for retina
+			pixelResolution: 1, // 2 for retina
+			useRoundPixels: true
 		};
 	}
 
@@ -95,6 +105,7 @@ class GameComponent extends React.Component<AllProps, State> {
 	componentDidMount() {
 		// Setup PIXI Canvas
 		let gameView: HTMLCanvasElement = document.getElementById(this.state.applicationViewId) as HTMLCanvasElement;
+		let fpsMeterView: HTMLDivElement = document.getElementById(this.state.fpsViewId) as HTMLDivElement;
 		this.renderer = Pixi.autoDetectRenderer({
 			view: gameView,
 			width: this.state.targetDimensions.width,
@@ -102,10 +113,12 @@ class GameComponent extends React.Component<AllProps, State> {
 			backgroundColor: this.state.backgroundColor,
 			transparent: this.state.isBackgroundTransparent,
 			resolution: this.state.pixelResolution,
+			roundPixels: this.state.useRoundPixels,
 		});
 
 		// Create our game instance
 		this.state.game.setRenderer(this.renderer);
+		this.state.game.setFpsMeterView(fpsMeterView);
 		
 		// Bind listeners for windows resizing
 		window.addEventListener('resize', this.rendererResize);
@@ -164,7 +177,10 @@ class GameComponent extends React.Component<AllProps, State> {
 	
 	render() {
 		return (
-			<GameView id={this.state.applicationViewId} />
+			<div>
+				<FPSMeterView id={this.state.fpsViewId} />
+				<GameView id={this.state.applicationViewId} />
+			</div>
 		);
 	}
 }

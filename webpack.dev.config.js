@@ -1,3 +1,5 @@
+const path = require('path');
+
 const polyfill = require("babel-polyfill");
 
 const webpack = require("webpack");
@@ -53,6 +55,8 @@ module.exports = Merge(CommonConfig, {
 		new webpack.NamedModulesPlugin()
 	],
 	devServer: {
+		//publicPath: '/assets/',
+		contentBase: path.join(__dirname, "app")
 		//historyApiFallback: true
 	}
 })

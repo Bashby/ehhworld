@@ -1,19 +1,14 @@
-// Lib Imports
+// Lib imports
 import * as Pixi from 'pixi.js';
 import { remove } from 'lodash';
 
-// Local Imports
+// Local imports
 import { IWorldPosition, RandomWorldPosition } from './world';
 import { Game } from './game';
 import { Player } from './object/player';
 import { Viewport } from './viewport';
+import { IGameObject } from './object/base';
 
-export interface IGameObject {
-    id: string
-    game: Game
-    position: Pixi.Point
-    update(dt: number): void
-}
 
 export class ObjectManager {
     children: IGameObject[] = [];
@@ -22,34 +17,24 @@ export class ObjectManager {
     constructor(game: Game) {
         this.game = game;
 
-        if (this.game.debug) {
-            this.debug()
-        }
+        // if (this.game.debug) {
+        //     this.debug()
+        // }
     }
 
     debug() {
         this.createPlayer();
-        for (let i of Array(100).keys()) {
-            console.log(i);
-        }
+        // for (let i of Array(100).keys()) {
+        //     console.log(i);
+        // }
     }
 
     step(dt: number) {
-        this.children.forEach((child) => child.update(dt))
-        if (Math.random() > 0.99) {
-            // console.info(
-            //     this.game.stage.width,
-            //     this.game.stage.height,
-            //     this.game.stage.position.x,
-            //     this.game.stage.position.y,
-            //     this.game.stage.scale.x,
-            //     this.game.stage.scale.y,
-            // );
-            // console.log(
-            //     "Stage Size:", this.game.stage.width, this.game.stage.height, this.game.stage.scale.x, this.game.stage.scale.y
-            //     + "\nRenderer Size: ", this.game.renderer.width, this.game.renderer.height
-            // );
-        }
+        this.children.forEach(child => child.update(dt));
+    }
+
+    draw(interp: number) {
+        this.children.forEach(child => child.draw(interp));
     }
 
     addObject(object: IGameObject): string {
