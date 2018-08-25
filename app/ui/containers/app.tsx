@@ -1,14 +1,15 @@
 // Lib Imports
 import { History } from "history";
-import React from "react";
-import { HotKeys } from "react-hotkeys";
+import React, { Component } from "react";
+import { HotKeys, KeyMap } from "react-hotkeys";
 import { connect, Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { ConnectedRouter } from "react-router-redux";
-import { bindActionCreators, Dispatch, Store } from "redux";
+import { AnyAction, bindActionCreators, Store } from "redux";
 import styled from "styled-components";
 
 // Local Imports
+import { ThunkDispatch } from "redux-thunk";
 import { InputActionCreators } from "../../state/actions/input";
 import { UIActionCreators } from "../../state/actions/ui";
 import { IApplicationState } from "../../state/application";
@@ -43,7 +44,7 @@ function mapStateToProps(state: IApplicationState): IMyStateProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+function mapDispatchToProps(dispatch: ThunkDispatch<IApplicationState, any, AnyAction>): IMyDispatchProps {
     return {
         toggleVisibilityVisGroup: bindActionCreators(UIActionCreators.toggleVisibilityVisGroup, dispatch),
         toggleVisibility: bindActionCreators(UIActionCreators.toggleVisibility, dispatch),
@@ -52,7 +53,7 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchP
 }
 
 // HotKey map
-const keyMap = {
+const keyMap: KeyMap = {
     UI_VISIBILITY_TOGGLE_Global: ["ctrl+u", "ctrl+U"],
     UI_VISIBILITY_HIDE_Overlays: "esc",
     UI_VISIBILITY_TOGGLE_ActionBar: ["ctrl+a", "ctrl+A"],
@@ -65,52 +66,16 @@ const keyMap = {
     UI_VISIBILITY_TOGGLE_QuestLog: ["l", "L"],
     UI_VISIBILITY_TOGGLE_Social: ["o", "O"],
     UI_VISIBILITY_TOGGLE_Crafting: ["p", "P"],
-    INPUT_KEYDOWN_LEFT: [
-        {sequence: "a", action: "keydown"},
-        {sequence: "shift+a", action: "keydown"},
-        {sequence: "left", action: "keydown"},
-    ],
-    INPUT_KEYUP_LEFT: [
-        {sequence: "a", action: "keyup"},
-        {sequence: "shift+a", action: "keyup"},
-        {sequence: "left", action: "keyup"},
-    ],
-    INPUT_KEYDOWN_RIGHT: [
-        {sequence: "d", action: "keydown"},
-        {sequence: "shift+d", action: "keydown"},
-        {sequence: "right", action: "keydown"},
-    ],
-    INPUT_KEYUP_RIGHT: [
-        {sequence: "d", action: "keyup"},
-        {sequence: "shift+d", action: "keyup"},
-        {sequence: "right", action: "keyup"},
-    ],
-    INPUT_KEYDOWN_UP: [
-        {sequence: "w", action: "keydown"},
-        {sequence: "shift+w", action: "keydown"},
-        {sequence: "up", action: "keydown"},
-    ],
-    INPUT_KEYUP_UP: [
-        {sequence: "w", action: "keyup"},
-        {sequence: "shift+w", action: "keyup"},
-        {sequence: "up", action: "keyup"},
-    ],
-    INPUT_KEYDOWN_DOWN: [
-        {sequence: "s", action: "keydown"},
-        {sequence: "shift+s", action: "keydown"},
-        {sequence: "down", action: "keydown"},
-    ],
-    INPUT_KEYUP_DOWN: [
-        {sequence: "s", action: "keyup"},
-        {sequence: "shift+s", action: "keyup"},
-        {sequence: "down", action: "keyup"},
-    ],
-    INPUT_KEYDOWN_SHIFT: [{sequence: "shift", action: "keydown"}],
-    INPUT_KEYUP_SHIFT: [{sequence: "shift", action: "keyup"}],
-    // INPUT_SET_RIGHT: ['d', 'right'],
-    // INPUT_SET_UP: ['w', 'up'],
-    // INPUT_SET_DOWN: ['s', 'down'],
-    // INPUT_SET_SHIFT: ['shift'],
+    INPUT_KEYDOWN_LEFT: { sequence: ["a", "A", "left"], action: "keydown" },
+    INPUT_KEYUP_LEFT: { sequence: ["a", "A", "left"], action: "keyup" },
+    INPUT_KEYDOWN_RIGHT: { sequence: ["d", "D", "right"], action: "keydown" },
+    INPUT_KEYUP_RIGHT: { sequence: ["d", "D", "right"], action: "keyup" },
+    INPUT_KEYDOWN_UP: { sequence: ["w", "W", "up"], action: "keydown" },
+    INPUT_KEYUP_UP: { sequence: ["w", "W", "up"], action: "keyup" },
+    INPUT_KEYDOWN_DOWN: { sequence: ["s", "S", "down"], action: "keydown" },
+    INPUT_KEYUP_DOWN: { sequence: ["s", "S", "down"], action: "keyup" },
+    INPUT_KEYDOWN_SHIFT: { sequence: "shift", action: "keydown" },
+    INPUT_KEYUP_SHIFT: { sequence: "shift", action: "keyup" },
 };
 
 // Styles
@@ -123,7 +88,7 @@ const Wrapper = styled.div`
 `;
 
 // Component class
-class AppComponent extends React.Component<IAllProps, IState> {
+class AppComponent extends Component<IAllProps, IState> {
     public readonly state: IState;
 
     // Hotkey handlers
@@ -153,12 +118,6 @@ class AppComponent extends React.Component<IAllProps, IState> {
         INPUT_KEYUP_DOWN: (event) => {this.props.setInput.setDown(false); },
         INPUT_KEYDOWN_SHIFT: (event) => {this.props.setInput.setShift(true); },
         INPUT_KEYUP_SHIFT: (event) => {this.props.setInput.setShift(false); },
-        // '': (event) => {},
-        // '': (event) => {},
-        // '': (event) => {},
-        // '': (event) => {},
-        // '': (event) => {},
-        // '': (event) => {},
         // '': (event) => {},
         // 'toggleFullScreen': (event) => {console.log('Fullscreen hotkey called!'); this.props.toggleFullscreen()},
     };

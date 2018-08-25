@@ -7,7 +7,7 @@ import { Player } from "./object/object-player";
 import { UUID } from "./util/types";
 
 export class ObjectManager {
-    public objects: { [key: string]: IGameObject; };
+    public objects: { [key: string]: IGameObject; } = {};
     public game: Game;
 
     constructor(game: Game) {

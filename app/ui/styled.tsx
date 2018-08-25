@@ -8,7 +8,7 @@ export const GUIBaseView = styled.div`
     background-color: wheat;
 `;
 
-export const GUIOverlayView = GUIBaseView.extend`
+export const GUIOverlayView = styled(GUIBaseView)`
     width: 80vw;
     height: 80vh;
     top: 10vh;

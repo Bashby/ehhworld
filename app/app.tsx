@@ -8,7 +8,7 @@ import { APP_VERSION } from "./game/util/constant";
 import { APPLICATION_INITIAL_STATE } from "./state/application";
 import { configureStore, history } from "./state/store";
 import { AppContainer } from "./ui/containers/app";
-import "./ui/style.sass";
+import "./ui/style.scss";
 
 // Render application
 const renderTarget = document.getElementById("application");

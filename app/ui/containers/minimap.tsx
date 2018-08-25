@@ -1,12 +1,12 @@
 // Lib Imports
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import styled from "styled-components";
 
 // Local Imports
 import { IApplicationState } from "../../state/application";
-import { GUIBaseView } from "../styles";
+import { GUIBaseView } from "../styled";
 
 // Interfaces
 interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
@@ -33,7 +33,7 @@ function mapStateToProps(state: IApplicationState): IMyStateProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+function mapDispatchToProps(dispatch: Dispatch): IMyDispatchProps {
     return {
     };
 }
@@ -47,7 +47,7 @@ const MiniMapContainerView = styled(GUIBaseView)`
 `;
 
 // Component
-class MiniMapComponent extends React.Component<IAllProps, IState> {
+class MiniMapComponent extends Component<IAllProps, IState> {
     public readonly state: IState;
 
     constructor(props: IAllProps) {

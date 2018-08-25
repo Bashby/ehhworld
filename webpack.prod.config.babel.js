@@ -5,9 +5,12 @@ import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplatePlugin from 'html-webpack-template';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 // Local imports
-import CommonWebpackConfig from './webpack.base.config';
+import CommonWebpackConfig from './webpack.base.config.babel';
 
 
 // Setup
@@ -15,9 +18,20 @@ const BASE_PATH = path.resolve(__dirname, 'app');
 const IMAGE_PATH = path.resolve(BASE_PATH, 'asset', 'image');
 
 module.exports = merge(CommonWebpackConfig, {
+  mode: 'production',
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   },
   plugins: [
     // Set environment variables
@@ -26,9 +40,6 @@ module.exports = merge(CommonWebpackConfig, {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-
-    // Uglify for production
-    new webpack.optimize.UglifyJsPlugin(),
 
     // Build Index.html
     new HtmlWebpackPlugin({
@@ -58,7 +69,7 @@ module.exports = merge(CommonWebpackConfig, {
 
     // Generate fav-icons for all targeted platforms
     new FaviconsWebpackPlugin({
-      logo: path.resolve(IMAGE_PATH, 'icons8-globe-64.png'),
+      logo: path.resolve(IMAGE_PATH, 'world.png'),
       prefix: 'favicons-[hash]/',
       title: 'app-favicon',
       persistentCache: true,
@@ -76,6 +87,11 @@ module.exports = merge(CommonWebpackConfig, {
         yandex: false,
         windows: false,
       },
+    }),
+
+    // Inline the webpack manifest in the index.html
+    new InlineManifestWebpackPlugin({
+      name: 'webpackManifest',
     }),
 
     // Hash chunks (be less performant but more accurate in production)

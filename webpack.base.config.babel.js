@@ -2,14 +2,12 @@
 import webpack from 'webpack';
 import path from 'path';
 import WebpackChunkHash from 'webpack-chunk-hash';
-import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 // Setup
+const DEV_MODE = process.env.NODE_ENV !== 'production';
 const BUILD_PATH = path.resolve(__dirname, 'build');
 const BASE_PATH = path.resolve(__dirname, 'app');
-
 
 // Base Webpack Config
 module.exports = {
@@ -23,50 +21,18 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.css$/,
-      use: [{
-        loader: 'style-loader',
-      },
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
+      test: /\.(sa|sc|c)ss$/,
+      use: [
+        {
+          loader: DEV_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
         },
-      },
-      ],
-      include: /flexboxgrid/,
-      exclude: /node_modules/,
-    },
-    {
-      test: /\.css$/,
-      include: [
-        BASE_PATH,
-        path.resolve(__dirname, 'node_modules/normalize.css/'),
-      ],
-      exclude: /flexboxgrid/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader',
-      }),
-    },
-    {
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: ExtractTextPlugin.extract({
-        use: [{
+        {
           loader: 'css-loader',
           options: {
-            sourceMap: true,
+            modules: true,
           },
-        }, {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true,
-          },
-        }],
-        // use style-loader in development
-        fallback: 'style-loader',
-      }),
+        },
+      ],
     },
     {
       test: /\.json$/,
@@ -151,19 +117,22 @@ module.exports = {
     // net: 'empty',
     // tls: 'empty'
   },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendor',
+                chunks: 'all'
+            }
+        }
+    }
+  },
   plugins: [
-    // Break out vendor and manifest common chunks
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest'],
-      minChunks: Infinity,
-    }),
-
-    // Extract CSS into a common file
-    new ExtractTextPlugin('[name].css'),
-
-    // Inline the webpack manifest in the index.html
-    new InlineManifestWebpackPlugin({
-      name: 'webpackManifest',
+    new MiniCssExtractPlugin({
+      filename: DEV_MODE ? '[name].css' : '[name].[hash].css',
+      chunkFilename: DEV_MODE ? '[id].css' : '[id].[hash].css',
     }),
 
     new WebpackChunkHash(),

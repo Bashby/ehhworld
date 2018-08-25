@@ -4,12 +4,14 @@ import path from 'path';
 import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplatePlugin from 'html-webpack-template';
+import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
 
 // Local imports
-import CommonWebpackConfig from './webpack.base.config';
+import CommonWebpackConfig from './webpack.base.config.babel';
 
 
 module.exports = merge(CommonWebpackConfig, {
+  mode: 'development',
   devtool: 'eval-source-map',
   output: {
     filename: '[name].js',
@@ -50,6 +52,11 @@ module.exports = merge(CommonWebpackConfig, {
       ],
     }),
 
+    // Inline the webpack manifest in the index.html
+    new InlineManifestWebpackPlugin({
+      name: 'webpackManifest',
+    }),
+
     // Hash chunks
     new webpack.NamedModulesPlugin(),
   ],
@@ -58,4 +65,8 @@ module.exports = merge(CommonWebpackConfig, {
     contentBase: path.join(__dirname, 'app'),
     // historyApiFallback: true
   },
+  serve: {
+    host: '0.0.0.0',
+    port: 8080,
+  }
 });

@@ -1,6 +1,6 @@
 // Lib Imports
 import actionCreatorFactory from "typescript-fsa";
-import { bindThunkAction } from "typescript-fsa-redux-thunk";
+import { asyncFactory, thunkToAction } from "typescript-fsa-redux-thunk";
 
 // Local Imports
 import { IApplicationState } from "../application";
@@ -8,20 +8,25 @@ import { UiVisibilityUpdate } from "../structures/ui";
 
 // Prepare action creator
 const UIActionCreator = actionCreatorFactory("UI");
+const UIAsyncActionCreator = asyncFactory<IApplicationState>(UIActionCreator);
 
 // Create actions
 const SetVisibility = UIActionCreator<UiVisibilityUpdate>("SET_VISIBILITY");
 const ToggleVisibility = UIActionCreator<string>("TOGGLE_VISIBILITY");
-const ToggleVisibilityVisGroup = UIActionCreator.async<
-    IApplicationState,
-    { id: string, visGroups?: string[] }, // input parameter type
-    void,
-    Error
->("TOGGLE_VISIBILITY_VISGROUP");
+interface IInputsA {
+    id: string;
+    visGroups?: string[];
+}
+interface IOutputsA {}
+// const ToggleVisibilityVisGroup = UIActionCreator.async<
+//     , // input type
+//     {} // result type
+// >("TOGGLE_VISIBILITY_VISGROUP");
 
 // Define Thunks
-const toggleVisibilityVisGroupWorker = bindThunkAction(ToggleVisibilityVisGroup,
-    async (params, dispatch, getState, extraArg) => { // `extraArg` is always `any` (for now)
+const toggleVisibilityVisGroupWorker = UIAsyncActionCreator<IInputsA, IOutputsA>(
+    "TOGGLE_VISIBILITY_VISGROUP",
+    async (params, dispatch, getState, extraArg) => {
         const state = getState();
 
         // Input validation
@@ -73,5 +78,5 @@ const toggleVisibilityVisGroupWorker = bindThunkAction(ToggleVisibilityVisGroup,
 export const UIActionCreators = {
     setVisibility: SetVisibility,
     toggleVisibility: ToggleVisibility,
-    toggleVisibilityVisGroup: toggleVisibilityVisGroupWorker,
+    toggleVisibilityVisGroup: thunkToAction(toggleVisibilityVisGroupWorker.action),
 };

@@ -1,12 +1,12 @@
 // Lib Imports
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import styled from "styled-components";
 
 // Local Imports
 import { IApplicationState } from "../../state/application";
-import { GUIBaseView } from "../styles";
+import { GUIBaseView } from "../styled";
 
 // Interfaces
 interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
@@ -29,7 +29,7 @@ function mapStateToProps(state: IApplicationState): IMyStateProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+function mapDispatchToProps(dispatch: Dispatch): IMyDispatchProps {
     return {
     };
 }
@@ -43,7 +43,7 @@ const EventLogContainerView = styled(GUIBaseView)`
 `;
 
 // Component
-class EventLogComponent extends React.Component<IAllProps, IState> {
+class EventLogComponent extends Component<IAllProps, IState> {
     public readonly state: IState;
 
     constructor(props: IAllProps) {

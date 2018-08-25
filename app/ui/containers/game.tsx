@@ -1,12 +1,13 @@
 // Lib Imports
 import { isEqual } from "lodash";
 import * as Pixi from "pixi.js";
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { AnyAction, Dispatch } from "redux";
 import styled from "styled-components";
 
 // Local Imports
+import { ThunkDispatch } from "redux-thunk";
 import { Game } from "../../game/game";
 import { IApplicationState } from "../../state/application";
 import { IInputState } from "../../state/reducers/input";
@@ -47,7 +48,7 @@ function mapStateToProps(state: IApplicationState): IMyStateProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+function mapDispatchToProps(dispatch: ThunkDispatch<IApplicationState, any, AnyAction>): IMyDispatchProps {
     return {
     };
 }
@@ -63,7 +64,7 @@ const FPSMeterView = styled.div`
 `;
 
 // Component
-class GameComponent extends React.Component<IAllProps, IState> {
+class GameComponent extends Component<IAllProps, IState> {
     public readonly state: IState;
     private renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
     private gameView: HTMLCanvasElement;

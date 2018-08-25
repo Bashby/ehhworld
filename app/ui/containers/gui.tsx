@@ -1,8 +1,8 @@
 // Lib Imports
 import _ from "lodash";
-import React from "react";
+import React, {Component } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { Dispatch, AnyAction } from "redux";
 import styled from "styled-components";
 
 // Local Imports
@@ -18,6 +18,7 @@ import { MiniMapContainer } from "./minimap";
 import { QuestLogContainer } from "./questlog";
 import { SocialContainer } from "./social";
 import { WorldMapContainer } from "./worldmap";
+import { ThunkDispatch } from "redux-thunk";
 
 // Interfaces
 interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
@@ -44,7 +45,7 @@ function mapStateToProps(state: IApplicationState): IMyStateProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+function mapDispatchToProps(dispatch: ThunkDispatch<IApplicationState, any, AnyAction>): IMyDispatchProps {
     return {
 
     };
@@ -55,7 +56,7 @@ const GUIContainerView = styled.div`
 `;
 
 // Component
-class GUIComponent extends React.Component<IAllProps, IState> {
+class GUIComponent extends Component<IAllProps, IState> {
     public readonly state: IState;
     private uiContainerMapping: { [key: string]: JSX.Element };
 
