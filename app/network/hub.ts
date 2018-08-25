@@ -1,6 +1,5 @@
-
-// Local Imports
-import { Queue } from "../game/util";
+// Local imports
+import { Queue } from "../game/util/queue";
 import { MessageHandler } from "./message";
 import { protobuf as message } from "./message.compiled";
 
@@ -41,25 +40,30 @@ export class Hub {
         // let header = Uint16Array.from([payload.length]);
         // payload.set(header, 0);
         // payload.set(binary, 2);
+        // tslint:disable-next-line:no-console
         console.log(buffer);
         this.send(buffer);
     }
 
     public onClose(event: CloseEvent) {
+        // tslint:disable-next-line:no-console
         console.log("Socket Closed: " + JSON.stringify(event));
     }
 
     public onError(event: Event) {
+        // tslint:disable-next-line:no-console
         console.log("Socket Error: " + JSON.stringify(event));
     }
 
     public onMessage(event: MessageEvent) {
+        // tslint:disable-next-line:no-console
         console.log("Message: " + JSON.stringify(event));
         this.handler.handle(event.data);
     }
 
     public send(data: any) {
         if ( this.ws.OPEN ) {
+            // tslint:disable-next-line:no-console
             console.log("Sending: " + data);
             this.ws.send(data);
         }

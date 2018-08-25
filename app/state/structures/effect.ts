@@ -1,20 +1,20 @@
-interface EffectId {
+interface IEffectId {
     id: string; // uuid
 }
 
-interface EffectBase {
+interface IEffectBase {
     name: string;
     description: string;
 
     category: EffectCategory;
     subcategory: EffectSubCategory;
 
-    application: EffectApplication;
+    application: IEffectApplication;
 
     magnitude?: number;
 }
 
-interface EffectMeta {
+interface IEffectMeta {
     level?: number;
 }
 
@@ -61,12 +61,12 @@ enum EffectSubCategory {
     // No sub categories
 }
 
-interface EffectApplication {
-    type: EffectApplicationType;
+interface IEffectApplication {
+    type: IEffectApplicationType;
     remaining?: number;
 }
 
-enum EffectApplicationType {
+enum IEffectApplicationType {
     Instant = 1,
     Periodic,
     Timed, // Applies until time runs out (in sec)
@@ -75,6 +75,6 @@ enum EffectApplicationType {
     Permanent, // There 'til you die!
 }
 
-type AnonymousEffect = EffectBase & EffectMeta;
-export type Effect = EffectId & AnonymousEffect;
-export type EffectUpdate = EffectId & Partial<AnonymousEffect>;
+type AnonymousEffect = IEffectBase & IEffectMeta;
+export type Effect = IEffectId & AnonymousEffect;
+export type EffectUpdate = IEffectId & Partial<AnonymousEffect>;

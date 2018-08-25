@@ -16,9 +16,9 @@ const enhancer: StoreEnhancer<IApplicationState> = composeWithDevTools(routerHis
 
 // Create store
 export function configureStore(initialState?: IApplicationState): Store<IApplicationState> {
-	return createStore(
-		applicationReducer,
-		initialState,
-		enhancer,
-	);
+    return createStore(
+        applicationReducer,
+        initialState,
+        enhancer,
+    );
 }

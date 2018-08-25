@@ -1,7 +1,7 @@
 export interface IWorldPosition {
-	x: number;
-	y: number;
-	r: number; // radians
+    x: number;
+    y: number;
+    r: number; // radians
 }
 
 export function RandomWorldPosition(): IWorldPosition {

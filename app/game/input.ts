@@ -4,17 +4,17 @@ import * as Pixi from "pixi.js";
 // Local Imports
 import { IInputState } from "../state/reducers/input";
 import { Game } from "./game";
-import { UnitVector, UnitVectorValue } from "./util";
+import { IUnitVector, UnitVectorValue } from "./util/types";
 
 export interface IInputManagerState extends IInputState {
-    directionVector: UnitVector;
+    directionVector: IUnitVector;
     mousePosition: Pixi.Point;
 }
 
 export class InputManager {
     public game: Game;
     public inputState: IInputState;
-    public directionVector: UnitVector;
+    public directionVector: IUnitVector;
 
     constructor(game: Game) {
         this.game = game;
@@ -39,7 +39,8 @@ export class InputManager {
         this.inputState = newState;
 
         // Derive
-        let x = 0, y = 0;
+        let x = 0;
+        let y = 0;
         if (this.inputState.left) {
             x -= 1;
         }

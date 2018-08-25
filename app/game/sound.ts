@@ -4,6 +4,5 @@ import { Howl, Howler } from "howler";
 // Local Imports
 
 export class SoundManager {
-  constructor() {
-  }
+  // constructor() {}
 }

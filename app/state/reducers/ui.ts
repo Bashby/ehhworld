@@ -1,11 +1,9 @@
 // Lib Imports
-import { fromJS } from "immutable";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 // Local Imports
 import { UIActionCreators } from "../actions/ui";
-import { Item } from "../structures/item";
-import { AnonymousUiVisibility, UiVisibilityGroup } from "../structures/ui";
+import { AnonymousUiVisibility, IUiVisibilityGroup } from "../structures/ui";
 
 // UI state interface
 export interface IUiState {
@@ -16,12 +14,12 @@ export interface IUiState {
 }
 
 // UI initial state
-const visGlobalUI: UiVisibilityGroup = {
+const visGlobalUI: IUiVisibilityGroup = {
     name: "globalUI",
     exclusive: false,
     zIndex: 1,
 };
-const visOverlays: UiVisibilityGroup = {
+const visOverlays: IUiVisibilityGroup = {
     name: "globalOverlays",
     exclusive: true,
     zIndex: 100,
@@ -68,7 +66,7 @@ export const uiReducer = reducerWithInitialState(UI_INITIAL_STATE)
     })
     .case(UIActionCreators.toggleVisibility, (state, payload) => {
         // Toggle top-level visibility if global
-        if (payload == "global") {
+        if (payload === "global") {
             return {
                 ...state,
                 visible: !state.visible,

@@ -90,16 +90,6 @@ class GUIComponent extends React.Component<IAllProps, IState> {
         return (
             <GUIContainerView>
                 {visibleUIContainers}
-                {this.props.uiVisibility.character.visible && <CharacterContainer/>}
-                {this.props.uiVisibility.worldmap.visible && <WorldMapContainer />}
-                {this.props.uiVisibility.questlog.visible && }
-                {this.props.uiVisibility.inventory.visible && <InventoryContainer />}
-                {this.props.uiVisibility.social.visible && <SocialContainer />}
-                {this.props.uiVisibility.crafting.visible && <CraftingContainer />}
-                {this.props.uiVisibility.chat.visible && <ChatContainer />}
-                {this.props.uiVisibility.minimap.visible && <MiniMapContainer />}
-                {this.props.uiVisibility.actionbar.visible && <ActionBarContainer />}
-                {this.props.uiVisibility.eventlog.visible && <EventLogContainer />}
             </GUIContainerView>
         );
     }

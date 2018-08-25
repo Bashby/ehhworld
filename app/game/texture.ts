@@ -6,8 +6,7 @@ import * as Pixi from "pixi.js";
 // import '../asset/sprite/test.json';
 
 export class TextureManager {
-  constructor() {
-  }
+  // constructor() {}
 
   public init(cb) {
     PIXI.loader.add("test", "../asset/sprite/test.json")

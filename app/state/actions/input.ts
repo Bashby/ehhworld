@@ -15,9 +15,9 @@ const SetShift = inputActionCreator < boolean > ("SET_SHIFT");
 
 // Bundle and export action creators
 export const InputActionCreators = {
-  setLeft: SetLeft,
-  setRight: SetRight,
-  setUp: SetUp,
-  setDown: SetDown,
-  setShift: SetShift,
+    setLeft: SetLeft,
+    setRight: SetRight,
+    setUp: SetUp,
+    setDown: SetDown,
+    setShift: SetShift,
 };

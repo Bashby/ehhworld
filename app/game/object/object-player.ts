@@ -1,14 +1,12 @@
-// Lib Imports
+// Lib imports
 import { OutlineFilter } from "pixi-filters";
 import * as Pixi from "pixi.js";
 
-// Local Imports
-import { IInputState } from "../../state/reducers/input";
+// Local imports
 import { Game } from "../game";
-import { IInputManagerState } from "../input";
-import { clamp, IUnitVector, UnitVectorValue } from "../util";
-import { IWorldPosition, RandomWorldPosition } from "../world";
-import { GameObject } from "./base";
+import { IUnitVector, UnitVectorValue } from "../util/types";
+import { clamp } from "../util/util";
+import { GameObject } from "./object-game";
 
 export class Player extends GameObject {
     public position: Pixi.Point;
@@ -64,9 +62,7 @@ export class Player extends GameObject {
             PIXI.utils.TextureCache["tile028.png"],
             PIXI.utils.TextureCache["tile029.png"],
         ];
-        // let sprite = new PIXI.Sprite(
-        //     PIXI.utils.TextureCache["tile000.png"]
-        //   );
+
         const sprite = new PIXI.extras.AnimatedSprite(textures);
         const sprite2 = new PIXI.extras.AnimatedSprite(textures2);
         const sprite3 = new PIXI.extras.AnimatedSprite(textures3);
@@ -132,34 +128,5 @@ export class Player extends GameObject {
         const negRot: boolean = this.rotation < 0;
         const absRotation = (Math.abs(this.rotation) - Math.abs(this.lastRotation)) * interp;
         this.displayObject.rotation = this.lastRotation + (negRot ? absRotation * -1 : absRotation);
-        // console.log(this.displayObject.rotation, absRotation);
     }
 }
-
-// console.log(this.displayObject.toGlobal(this.displayObject.position));
-
-    // // Mixin Moveable
-    // position: IWorldPosition;
-    // facing: number;
-    // move: (dt: number, input: IInputManagerState) => void
-
-    // // Mixin Renderable
-    // displayObject: Pixi.Graphics;
-
-// Modify composed class
-// let proto = Player.prototype;
-// proto.onConstruct = () => {
-//     //debugger;
-//     //proto.renderTarget = this.game.stage;
-// }
-// proto.update = (dt: number) => {
-//     proto.move(dt, proto.game.input.getState());
-//     proto.displayObject.position = new Pixi.Point(proto.position.x, proto.position.y);
-// }
-
-// this.position.r = Math.atan2(
-//     input.mousePosition.y - this.position.y,
-//     input.mousePosition.x - this.position.x
-// ) * (180 / Math.PI);
-
-// displayObject: Pixi.Graphics = new Pixi.Graphics();

@@ -15,8 +15,8 @@ const UpdatePosition = playerActionCreator < IWorldPosition > ("UPDATE_POSITION"
 
 // Bundle and export action creators
 export const PlayerActionCreators = {
-  updateName: UpdateName,
-  updateAuthenticated: UpdateAuthenticated,
-  updateLevel: UpdateLevel,
-  updatePosition: UpdatePosition,
+    updateName: UpdateName,
+    updateAuthenticated: UpdateAuthenticated,
+    updateLevel: UpdateLevel,
+    updatePosition: UpdatePosition,
 };

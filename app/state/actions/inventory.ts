@@ -18,5 +18,5 @@ const UpdateSlot = inventoryActionCreator<ItemUpdate>("UPDATE_SLOT");
 export const InventoryActionCreators = {
     setSlots: SetSlots,
     setSlot: SetSlot,
-	updateSlot: UpdateSlot,
+    updateSlot: UpdateSlot,
 };

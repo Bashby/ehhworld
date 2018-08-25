@@ -1,74 +1,69 @@
 // Lib Imports
-import * as React from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { ActionCreator } from "typescript-fsa";
-
+import { Dispatch } from "redux";
 import styled from "styled-components";
-
-import { Redirect, Route, Switch } from "react-router";
-import { Link } from "react-router-dom";
-import { push } from "react-router-redux";
 
 // Local Imports
 import { IApplicationState } from "../../state/application";
 import { GUIOverlayView } from "../styles";
 
 // Interfaces
-interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
+interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
 
-interface MyStateProps {
-
-}
-
-interface MyDispatchProps {
+interface IMyStateProps {
 
 }
 
-interface MyOwnProps {
+interface IMyDispatchProps {
 
 }
 
-interface State {
+interface IMyOwnProps {
+
+}
+
+interface IState {
 
 }
 
 // State mappings
-function mapStateToProps(state: IApplicationState): MyStateProps {
-	return {
-	};
+function mapStateToProps(state: IApplicationState): IMyStateProps {
+    return {
+    };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
-	return {
-	};
+function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+    return {
+    };
 }
 
-// Styled-components
+// Styles
 const CraftingContainerView = styled(GUIOverlayView)`
-	background-color: purple;
+    background-color: purple;
 `;
 
-// Component class
-class CraftingComponent extends React.Component<AllProps, State> {
-	constructor(props: AllProps) {
-		super(props);
-		this.state = {
-		};
-	}
+// Component
+class CraftingComponent extends React.Component<IAllProps, IState> {
+    public readonly state: IState;
 
-	public render() {
-		return (
-			<CraftingContainerView>
-				Crafting Container!
-			</CraftingContainerView>
-		);
-	}
+    constructor(props: IAllProps) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    public render() {
+        return (
+            <CraftingContainerView>
+                Crafting Container!
+            </CraftingContainerView>
+        );
+    }
 }
 
-// State-aware container
-export const CraftingContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
-	mapStateToProps,
-	mapDispatchToProps,
+// Container
+export const CraftingContainer = connect<IMyStateProps, IMyDispatchProps, IMyOwnProps>(
+    mapStateToProps,
+    mapDispatchToProps,
 )(CraftingComponent);
