@@ -1,78 +1,72 @@
 // Lib Imports
-import * as React from 'react';
-import { Dispatch, bindActionCreators } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { connect } from 'react-redux';
-import { ActionCreator } from 'typescript-fsa';
-
-import styled from 'styled-components';
-
-import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux'
-import { Route, Switch, Redirect } from "react-router";
+import React from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import styled from "styled-components";
 
 // Local Imports
-import { IApplicationState } from '../../state/application';
-import { GUIBaseView } from '../styles';
-
+import { IApplicationState } from "../../state/application";
+import { GUIBaseView } from "../styles";
 
 // Interfaces
-interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
+interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
 
-interface MyStateProps {
-
-}
-
-interface MyDispatchProps {
+interface IMyStateProps {
 
 }
 
-interface MyOwnProps {
+interface IMyDispatchProps {
 
 }
 
-interface State {
-	
+interface IMyOwnProps {
+
+}
+
+interface IState {
+
 }
 
 // State mappings
-function mapStateToProps(state: IApplicationState): MyStateProps {
-	return {
-	}
+function mapStateToProps(state: IApplicationState): IMyStateProps {
+    return {
+    };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
-	return {
-	}
+function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): IMyDispatchProps {
+    return {
+    };
 }
 
-// Styled-components
+// Styles
 const MiniMapContainerView = styled(GUIBaseView)`
-	width: 18vw;
-	height: 15vh;
-	top: 0.5vh;
-	right: 0.29vw;
+    width: 18vw;
+    height: 15vh;
+    top: 0.5vh;
+    right: 0.29vw;
 `;
 
-// Component class
-class MiniMapComponent extends React.Component<AllProps, State> {
-	constructor(props: AllProps) {
-		super(props);
-		this.state = {
-		};
-	}
+// Component
+class MiniMapComponent extends React.Component<IAllProps, IState> {
+    public readonly state: IState;
 
-	render() {
-		return (
-			<MiniMapContainerView>
-				MiniMap Container!
-			</MiniMapContainerView>
-		);
-	}
+    constructor(props: IAllProps) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    public render() {
+        return (
+            <MiniMapContainerView>
+                MiniMap Container!
+            </MiniMapContainerView>
+        );
+    }
 }
 
-// State-aware container
-export const MiniMapContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
+// Container
+export const MiniMapContainer = connect<IMyStateProps, IMyDispatchProps, IMyOwnProps>(
+    mapStateToProps,
+    mapDispatchToProps,
 )(MiniMapComponent);

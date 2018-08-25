@@ -1,50 +1,49 @@
 // Lib Imports
-import * as Pixi from 'pixi.js';
-import * as MainLoop from 'mainloop.js';
+import * as MainLoop from "mainloop.js";
+import * as Pixi from "pixi.js";
 
 // Local Imports
-import { config, SERVER_URL } from './config';
-import { Hub } from '../network';
-import { ObjectManager } from './object';
-import { IInputState } from '../state/reducers/input';
-import { InputManager } from './input';
-import { SoundManager } from './sound';
-import { Player } from './object/player';
-import { Viewport } from './viewport';
-import { TextureManager } from './texture';
-
+import { Hub } from "../network";
+import { IInputState } from "../state/reducers/input";
+import { config, SERVER_URL } from "./config";
+import { InputManager } from "./input";
+import { ObjectManager } from "./object";
+import { Player } from "./object/player";
+import { SoundManager } from "./sound";
+import { TextureManager } from "./texture";
+import { Viewport } from "./viewport";
 
 export class Game {
 	// Rendering
-	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
-	stage: Pixi.Container;
-	fpsMeterView: HTMLDivElement;
+	public renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
+	public stage: Pixi.Container;
+	public fpsMeterView: HTMLDivElement;
 
 	// Sub-system Managers
-	network: Hub
-	objects: ObjectManager
-	input: InputManager
-	viewport: Viewport
-	sound: SoundManager
-	texture: TextureManager
+	public network: Hub;
+	public objects: ObjectManager;
+	public input: InputManager;
+	public viewport: Viewport;
+	public sound: SoundManager;
+	public texture: TextureManager;
 
 	// Game state
-	debug: boolean = config.get('debug');
+	public debug: boolean = config.get("debug");
 
 	// Game loop
-	loop: MainLoop
-	targetFPS: number = config.get('render.fps');
-	timeStep: number = 1000 / this.targetFPS;
+	public loop: MainLoop;
+	public targetFPS: number = config.get("render.fps");
+	public timeStep: number = 1000 / this.targetFPS;
 
 	constructor(stage: Pixi.Container) {
-		this.stage = stage; 
+		this.stage = stage;
 
 		// Init Sub-systems
 		this.objects = new ObjectManager(this);
 		this.input = new InputManager(this);
 		this.sound = new SoundManager();
 		this.texture = new TextureManager();
-		this.network = new Hub()
+		this.network = new Hub();
 		this.network.connect(SERVER_URL);
 
 		// Setup game loop
@@ -55,31 +54,31 @@ export class Game {
 			.setEnd(this.end.bind(this));
 	}
 
-	setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
+	public setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
 		this.renderer = renderer;
 	}
 
-	setFpsMeterView(view: HTMLDivElement) {
+	public setFpsMeterView(view: HTMLDivElement) {
 		this.fpsMeterView = view;
 	}
 
-	start() {
+	public start() {
 		if (!this.renderer) {
 			console.error("No renderer defined for game!");
 		} else {
 			this.texture.init(this.loopStart.bind(this));
-			//this.loop.start();
+			// this.loop.start();
 			// this.running = true
 			// requestAnimationFrame(this.tick.bind(this));
 		}
 	}
 
-	loopStart() {
+	public loopStart() {
 		this.objects.debug();
 		this.loop.start();
 	}
 
-	stop() {
+	public stop() {
 		this.loop.stop();
 	}
 
@@ -119,23 +118,23 @@ export class Game {
 	// 	}
 	// }
 
-	update(dt: number) {
+	public update(dt: number) {
 		this.objects.step(dt);
 	}
 
-	draw(interp: number) {
+	public draw(interp: number) {
 		this.objects.draw(interp);
 		this.renderer.render(this.stage);
 	}
 
-	end(fps: number, panic: boolean) {
-		//console.log(this.loop.getMaxAllowedFPS(), this.loop.getSimulationTimestep());
+	public end(fps: number, panic: boolean) {
+		// console.log(this.loop.getMaxAllowedFPS(), this.loop.getSimulationTimestep());
 		if (this.fpsMeterView) {
-			this.fpsMeterView.textContent = Math.round(fps) + ' FPS';
+			this.fpsMeterView.textContent = Math.round(fps) + " FPS";
 		}
 		if (panic) {
-			var discardedTime = Math.round(MainLoop.resetFrameDelta());
-			console.warn('Main loop panicked. Discarding ' + discardedTime + 'ms');
+			const discardedTime = Math.round(MainLoop.resetFrameDelta());
+			console.warn("Main loop panicked. Discarding " + discardedTime + "ms");
 		}
 	}
 }

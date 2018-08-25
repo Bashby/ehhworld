@@ -9,7 +9,6 @@
 // import { Constructor } from "./util";
 // import { IGameObject } from "../object";
 
-
 // // Mixins
 // export function Movable<T extends Constructor<IGameObject>>(ObjectBase: T) {
 //     return class ObjectMovable extends ObjectBase {
@@ -20,7 +19,6 @@
 //         angle: number = 0;
 //         SPEED_MAX: number = 1;
 //         SPEED_MIN: number = 0;
-        
 
 //         constructor(...args: any[]) {
 //             super(...args);
@@ -37,8 +35,7 @@
 //             this.lastPosition = this.position;
 //             this.position.x += this.direction.x * clampedSpeed * dt;
 //             this.position.y += this.direction.y * clampedSpeed * dt;
-            
-            
+
 //             // if (Math.random() > 0.99) {
 //             //     console.log(
 //             //         'position: ' +

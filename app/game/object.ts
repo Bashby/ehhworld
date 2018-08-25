@@ -1,18 +1,17 @@
 // Lib imports
-import * as Pixi from 'pixi.js';
-import { remove } from 'lodash';
+import { remove } from "lodash";
+import * as Pixi from "pixi.js";
 
 // Local imports
-import { IWorldPosition, RandomWorldPosition } from './world';
-import { Game } from './game';
-import { Player } from './object/player';
-import { Viewport } from './viewport';
-import { IGameObject } from './object/base';
-
+import { Game } from "./game";
+import { IGameObject } from "./object/base";
+import { Player } from "./object/player";
+import { Viewport } from "./viewport";
+import { IWorldPosition, RandomWorldPosition } from "./world";
 
 export class ObjectManager {
-    children: IGameObject[] = [];
-    game: Game;
+    public children: IGameObject[] = [];
+    public game: Game;
 
     constructor(game: Game) {
         this.game = game;
@@ -22,33 +21,33 @@ export class ObjectManager {
         // }
     }
 
-    debug() {
+    public debug() {
         this.createPlayer();
         // for (let i of Array(100).keys()) {
         //     console.log(i);
         // }
     }
 
-    step(dt: number) {
-        this.children.forEach(child => child.update(dt));
+    public step(dt: number) {
+        this.children.forEach((child) => child.update(dt));
     }
 
-    draw(interp: number) {
-        this.children.forEach(child => child.draw(interp));
+    public draw(interp: number) {
+        this.children.forEach((child) => child.draw(interp));
     }
 
-    addObject(object: IGameObject): string {
+    public addObject(object: IGameObject): string {
         this.children.push(object);
         return object.id;
     }
 
-    removeObject(objectId: string): boolean {
+    public removeObject(objectId: string): boolean {
         const removed = remove(this.children, (item) => item.id === objectId); // TODO: This seems.... not performant
         return removed.length >= 1;
     }
 
-    createPlayer() {
-        let player = new Player(this.game);
+    public createPlayer() {
+        const player = new Player(this.game);
         this.addObject(player);
         return player;
     }
@@ -65,14 +64,12 @@ export class ObjectManager {
     // }
 }
 
-
-
 // debugInit() {
 //     // Put some stuff into the stage
-//     // var background = new PIXI.Graphics();  
-//     // background.beginFill(0x123456);  
-//     // background.drawRect(0,0,100,100);  
-//     // background.endFill();  
+//     // var background = new PIXI.Graphics();
+//     // background.beginFill(0x123456);
+//     // background.drawRect(0,0,100,100);
+//     // background.endFill();
 //     // this.stage.addChild(background);
 
 //     // var square = new PIXI.Graphics();

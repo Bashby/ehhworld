@@ -4,7 +4,6 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 // Local Imports
 import { InputActionCreators } from "../actions/input";
 
-
 // Input state interface
 export interface IInputState {
 	left: boolean;
@@ -21,38 +20,38 @@ export const INPUT_INITIAL_STATE: IInputState = {
 	up: false,
 	down: false,
 	shift: false,
-}
+};
 
 // Input state reducer
 export const inputReducer = reducerWithInitialState(INPUT_INITIAL_STATE)
 	.case(InputActionCreators.setLeft, (state, payload) => {
 		return {
 			...state,
-			left: payload
+			left: payload,
 		};
 	})
 	.case(InputActionCreators.setRight, (state, payload) => {
 		return {
 			...state,
-			right: payload
+			right: payload,
 		};
 	})
 	.case(InputActionCreators.setUp, (state, payload) => {
 		return {
 			...state,
-			up: payload
+			up: payload,
 		};
 	})
 	.case(InputActionCreators.setDown, (state, payload) => {
 		return {
 			...state,
-			down: payload
+			down: payload,
 		};
 	})
 	.case(InputActionCreators.setShift, (state, payload) => {
 		return {
 			...state,
-			shift: payload
+			shift: payload,
 		};
 	})
 	.build();

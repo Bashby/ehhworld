@@ -1,21 +1,21 @@
-type EffectId = {
-    id: string // uuid
+interface EffectId {
+    id: string; // uuid
 }
 
-type EffectBase = {
-    name: string
-    description: string
+interface EffectBase {
+    name: string;
+    description: string;
 
-    category: EffectCategory
-    subcategory: EffectSubCategory
+    category: EffectCategory;
+    subcategory: EffectSubCategory;
 
-    application: EffectApplication
+    application: EffectApplication;
 
-    magnitude?: number
+    magnitude?: number;
 }
 
-type EffectMeta = {
-    level?: number
+interface EffectMeta {
+    level?: number;
 }
 
 enum EffectCategory {
@@ -61,9 +61,9 @@ enum EffectSubCategory {
     // No sub categories
 }
 
-type EffectApplication = {
-    type: EffectApplicationType
-    remaining?: number
+interface EffectApplication {
+    type: EffectApplicationType;
+    remaining?: number;
 }
 
 enum EffectApplicationType {

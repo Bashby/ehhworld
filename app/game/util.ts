@@ -1,40 +1,40 @@
 export function getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
 }
 
 export class Queue {
-    _oldestIndex: number
-    _newestIndex: number
-    _storage: object
+    public oldestIndex: number;
+    public newestIndex: number;
+    public storage: object;
 
     constructor() {
-        this._oldestIndex = 1
-        this._newestIndex = 1
-        this._storage = {}
+        this.oldestIndex = 1;
+        this.newestIndex = 1;
+        this.storage = {};
     }
-    getStorage() {
-        return this._storage
+    public getStorage() {
+        return this.storage;
     }
-    getSize() {
-        return this._newestIndex - this._oldestIndex
+    public getSize() {
+        return this.newestIndex - this.oldestIndex;
     }
-    enqueue(data) {
-        this._storage[this._newestIndex] = data
-        this._newestIndex++
+    public enqueue(data) {
+        this.storage[this.newestIndex] = data;
+        this.newestIndex++;
     }
-    dequeue() {
-        const oldestIndex = this._oldestIndex
-        const newestIndex = this._newestIndex
-        let deletedData
+    public dequeue() {
+        const oldestIndex = this.oldestIndex;
+        const newestIndex = this.newestIndex;
+        let deletedData;
 
         if (oldestIndex !== newestIndex) {
-            deletedData = this._storage[oldestIndex]
-            delete this._storage[oldestIndex]
-            this._oldestIndex++
+            deletedData = this.storage[oldestIndex];
+            delete this.storage[oldestIndex];
+            this.oldestIndex++;
 
-            return deletedData
+            return deletedData;
         }
     }
 }
@@ -51,13 +51,13 @@ export function clamp(max: number, min: number, val: number) {
     return Math.max(min, Math.min(max, val));
 }
 
-export interface UnitVector {
-    x: UnitVectorValue
-    y: UnitVectorValue
+export interface IUnitVector {
+    x: UnitVectorValue;
+    y: UnitVectorValue;
 }
 
 export enum UnitVectorValue {
     Position = 1,
     Negative = -1,
-    Zero = 0
+    Zero = 0,
 }

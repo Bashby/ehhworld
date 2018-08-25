@@ -1,16 +1,16 @@
-type UiVisibilityId = {
-    id: string // uuid
+interface UiVisibilityId {
+    id: string; // uuid
 }
 
-type UiVisibilityBase = {
-    visible: boolean,
-    visGroups: UiVisibilityGroup[]
+interface UiVisibilityBase {
+    visible: boolean;
+    visGroups: UiVisibilityGroup[];
 }
 
-export type UiVisibilityGroup = {
-    name: string,
-    exclusive: boolean,
-    zIndex: number
+export interface UiVisibilityGroup {
+    name: string;
+    exclusive: boolean;
+    zIndex: number;
 }
 
 export type AnonymousUiVisibility = UiVisibilityBase;

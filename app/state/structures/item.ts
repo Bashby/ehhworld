@@ -1,29 +1,29 @@
-type ItemId = {
-    id: string // uuid
+interface ItemId {
+    id: string; // uuid
 }
 
-type ItemBase = {
-    name: string
-    description: string
+interface ItemBase {
+    name: string;
+    description: string;
 
-    category: ItemCategory
-    subcategory: ItemSubCategory
-    
-    level: number
-    rarity: ItemRarity
-    
-    durability: number // 0.0 to 1.0
-    weight: number
+    category: ItemCategory;
+    subcategory: ItemSubCategory;
+
+    level: number;
+    rarity: ItemRarity;
+
+    durability: number; // 0.0 to 1.0
+    weight: number;
 }
 
-type ItemMeta = {
-    stolen: boolean
-    broken: boolean
-    stackable: boolean
-    maxstack: number,
-    count: number
-    equipable: boolean
-    equipped: boolean
+interface ItemMeta {
+    stolen: boolean;
+    broken: boolean;
+    stackable: boolean;
+    maxstack: number;
+    count: number;
+    equipable: boolean;
+    equipped: boolean;
 }
 
 enum ItemRarity {
@@ -105,7 +105,7 @@ enum ItemSubCategory {
     Scroll,
     Food,
     Drink,
-    
+
     ////////////////
     // Projectile //
     ////////////////

@@ -1,27 +1,26 @@
 // Lib Imports
+import { OutlineFilter } from "pixi-filters";
 import * as Pixi from "pixi.js";
-import { OutlineFilter } from 'pixi-filters';
 
 // Local Imports
-import { IWorldPosition, RandomWorldPosition } from "../world";
-import { GameObject } from "./base";
 import { IInputState } from "../../state/reducers/input";
 import { Game } from "../game";
 import { IInputManagerState } from "../input";
-import { clamp, SimpleDirectionVector, DirectionVectorValue } from "../util";
-
+import { clamp, IUnitVector, UnitVectorValue } from "../util";
+import { IWorldPosition, RandomWorldPosition } from "../world";
+import { GameObject } from "./base";
 
 export class Player extends GameObject {
-    position: Pixi.Point;
-    lastPosition: Pixi.Point;
-    speed: number = 0.1;
-    SPEED_MAX: number = 1;
-    SPEED_MIN: number = 0;
-    direction: SimpleDirectionVector = { x: DirectionVectorValue.Zero, y: DirectionVectorValue.Zero }
-    rotation: number = 0;
-    lastRotation: number = 0;
-    renderTarget: Pixi.Container;
-    displayObject: Pixi.Graphics = new Pixi.Graphics();
+    public position: Pixi.Point;
+    public lastPosition: Pixi.Point;
+    public speed: number = 0.1;
+    public SPEED_MAX: number = 1;
+    public SPEED_MIN: number = 0;
+    public direction: IUnitVector = { x: UnitVectorValue.Zero, y: UnitVectorValue.Zero };
+    public rotation: number = 0;
+    public lastRotation: number = 0;
+    public renderTarget: Pixi.Container;
+    public displayObject: Pixi.Graphics = new Pixi.Graphics();
 
     constructor(game: Game) {
         super(game);
@@ -29,8 +28,7 @@ export class Player extends GameObject {
         this.renderTarget = this.game.stage;
         this.renderTarget.addChild(this.displayObject);
 
-        console.log(PIXI.utils.TextureCache);
-        let textures = [
+        const textures = [
             PIXI.utils.TextureCache["tile000.png"],
             PIXI.utils.TextureCache["tile001.png"],
             PIXI.utils.TextureCache["tile002.png"],
@@ -42,7 +40,7 @@ export class Player extends GameObject {
             PIXI.utils.TextureCache["tile008.png"],
             PIXI.utils.TextureCache["tile009.png"],
         ];
-        let textures2 = [
+        const textures2 = [
             PIXI.utils.TextureCache["tile010.png"],
             PIXI.utils.TextureCache["tile011.png"],
             PIXI.utils.TextureCache["tile012.png"],
@@ -54,7 +52,7 @@ export class Player extends GameObject {
             PIXI.utils.TextureCache["tile018.png"],
             PIXI.utils.TextureCache["tile019.png"],
         ];
-        let textures3 = [
+        const textures3 = [
             PIXI.utils.TextureCache["tile020.png"],
             PIXI.utils.TextureCache["tile021.png"],
             PIXI.utils.TextureCache["tile022.png"],
@@ -69,15 +67,15 @@ export class Player extends GameObject {
         // let sprite = new PIXI.Sprite(
         //     PIXI.utils.TextureCache["tile000.png"]
         //   );
-        let sprite = new PIXI.extras.AnimatedSprite(textures);
-        let sprite2 = new PIXI.extras.AnimatedSprite(textures2);
-        let sprite3 = new PIXI.extras.AnimatedSprite(textures3);
+        const sprite = new PIXI.extras.AnimatedSprite(textures);
+        const sprite2 = new PIXI.extras.AnimatedSprite(textures2);
+        const sprite3 = new PIXI.extras.AnimatedSprite(textures3);
         sprite.animationSpeed = 0.1;
         sprite2.animationSpeed = 0.1;
         sprite3.animationSpeed = 0.1;
-        sprite.scale = new Pixi.Point(5,5);
-        sprite2.scale = new Pixi.Point(5,5);
-        sprite3.scale = new Pixi.Point(5,5);
+        sprite.scale = new Pixi.Point(5, 5);
+        sprite2.scale = new Pixi.Point(5, 5);
+        sprite3.scale = new Pixi.Point(5, 5);
         sprite.filters = [new OutlineFilter(5, 0xFF0000)];
         sprite.play();
         sprite2.play();
@@ -95,7 +93,7 @@ export class Player extends GameObject {
         this.init();
     }
 
-    init() {
+    public init() {
         this.displayObject.beginFill(0xFFFF00);
         this.displayObject.lineStyle(5, 0xFF0000);
         this.displayObject.drawRect(-50, -50, 100, 100);
@@ -107,9 +105,9 @@ export class Player extends GameObject {
         this.lastPosition = this.position;
     }
 
-    update(dt: number) {
+    public update(dt: number) {
         // Handle Input
-        let inputState = this.game.input.getState();
+        const inputState = this.game.input.getState();
         this.direction = inputState.directionVector;
         if (inputState.shift) {
             this.speed = 0.3;
@@ -120,31 +118,26 @@ export class Player extends GameObject {
         // Calculate
         this.lastPosition = this.position;
         this.lastRotation = this.rotation;
-        let clampedSpeed = clamp(this.SPEED_MAX, this.SPEED_MIN, this.speed);
+        const clampedSpeed = clamp(this.SPEED_MAX, this.SPEED_MIN, this.speed);
         this.position.x += this.direction.x * clampedSpeed * dt;
         this.position.y += this.direction.y * clampedSpeed * dt;
-        let globalPos = this.renderTarget.toGlobal(this.position);
+        const globalPos = this.renderTarget.toGlobal(this.position);
         this.rotation = Math.atan2(inputState.mousePosition.y - globalPos.y, inputState.mousePosition.x - globalPos.x);
     }
 
-    draw(interp: number) {
+    public draw(interp: number) {
         // Render
         this.displayObject.position.x = this.lastPosition.x + (this.position.x - this.lastPosition.x) * interp;
         this.displayObject.position.y = this.lastPosition.y + (this.position.y - this.lastPosition.y) * interp;
-        let negRot: boolean = this.rotation < 0;
-        let absRotation = (Math.abs(this.rotation) - Math.abs(this.lastRotation)) * interp;
+        const negRot: boolean = this.rotation < 0;
+        const absRotation = (Math.abs(this.rotation) - Math.abs(this.lastRotation)) * interp;
         this.displayObject.rotation = this.lastRotation + (negRot ? absRotation * -1 : absRotation);
-        //console.log(this.displayObject.rotation, absRotation);
+        // console.log(this.displayObject.rotation, absRotation);
     }
 }
 
+// console.log(this.displayObject.toGlobal(this.displayObject.position));
 
-
-
-
-
-//console.log(this.displayObject.toGlobal(this.displayObject.position));
-    
     // // Mixin Moveable
     // position: IWorldPosition;
     // facing: number;
@@ -164,6 +157,9 @@ export class Player extends GameObject {
 //     proto.displayObject.position = new Pixi.Point(proto.position.x, proto.position.y);
 // }
 
-//this.position.r = Math.atan2(input.mousePosition.y - this.position.y, input.mousePosition.x - this.position.x) // * (180 / Math.PI);
+// this.position.r = Math.atan2(
+//     input.mousePosition.y - this.position.y,
+//     input.mousePosition.x - this.position.x
+// ) * (180 / Math.PI);
 
-//displayObject: Pixi.Graphics = new Pixi.Graphics();
+// displayObject: Pixi.Graphics = new Pixi.Graphics();

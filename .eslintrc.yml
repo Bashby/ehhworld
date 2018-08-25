@@ -1,1 +1,7 @@
-extends: standard
+extends:
+  - eslint:recommended
+  - airbnb
+env:
+  browser: true
+parser:
+  babel-eslint

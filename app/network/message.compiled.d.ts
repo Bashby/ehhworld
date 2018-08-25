@@ -23,27 +23,6 @@ export namespace protobuf {
     class Message implements IMessage {
 
         /**
-         * Constructs a new Message.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: protobuf.IMessage);
-
-        /** Message move. */
-        public move?: (protobuf.IMove|null);
-
-        /** Message attack. */
-        public attack?: (protobuf.IAttack|null);
-
-        /** Message build. */
-        public build?: (protobuf.IBuild|null);
-
-        /** Message sleep. */
-        public sleep?: (protobuf.ISleep|null);
-
-        /** Message payload. */
-        public payload?: ("move"|"attack"|"build"|"sleep");
-
-        /**
          * Creates a new Message instance using the specified properties.
          * @param [properties] Properties to set
          * @returns Message instance
@@ -107,6 +86,27 @@ export namespace protobuf {
          */
         public static toObject(message: protobuf.Message, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
+        /** Message move. */
+        public move?: (protobuf.IMove|null);
+
+        /** Message attack. */
+        public attack?: (protobuf.IAttack|null);
+
+        /** Message build. */
+        public build?: (protobuf.IBuild|null);
+
+        /** Message sleep. */
+        public sleep?: (protobuf.ISleep|null);
+
+        /** Message payload. */
+        public payload?: ("move"|"attack"|"build"|"sleep");
+
+        /**
+         * Constructs a new Message.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: protobuf.IMessage);
+
         /**
          * Converts this Message to JSON.
          * @returns JSON object
@@ -123,15 +123,6 @@ export namespace protobuf {
 
     /** Represents a Move. */
     class Move implements IMove {
-
-        /**
-         * Constructs a new Move.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: protobuf.IMove);
-
-        /** Move direction. */
-        public direction: string;
 
         /**
          * Creates a new Move instance using the specified properties.
@@ -197,6 +188,15 @@ export namespace protobuf {
          */
         public static toObject(message: protobuf.Move, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
+        /** Move direction. */
+        public direction: string;
+
+        /**
+         * Constructs a new Move.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: protobuf.IMove);
+
         /**
          * Converts this Move to JSON.
          * @returns JSON object
@@ -213,15 +213,6 @@ export namespace protobuf {
 
     /** Represents an Attack. */
     class Attack implements IAttack {
-
-        /**
-         * Constructs a new Attack.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: protobuf.IAttack);
-
-        /** Attack target. */
-        public target: string;
 
         /**
          * Creates a new Attack instance using the specified properties.
@@ -287,6 +278,15 @@ export namespace protobuf {
          */
         public static toObject(message: protobuf.Attack, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
+        /** Attack target. */
+        public target: string;
+
+        /**
+         * Constructs a new Attack.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: protobuf.IAttack);
+
         /**
          * Converts this Attack to JSON.
          * @returns JSON object
@@ -303,15 +303,6 @@ export namespace protobuf {
 
     /** Represents a Build. */
     class Build implements IBuild {
-
-        /**
-         * Constructs a new Build.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: protobuf.IBuild);
-
-        /** Build type. */
-        public type: string;
 
         /**
          * Creates a new Build instance using the specified properties.
@@ -377,6 +368,15 @@ export namespace protobuf {
          */
         public static toObject(message: protobuf.Build, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
+        /** Build type. */
+        public type: string;
+
+        /**
+         * Constructs a new Build.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: protobuf.IBuild);
+
         /**
          * Converts this Build to JSON.
          * @returns JSON object
@@ -393,15 +393,6 @@ export namespace protobuf {
 
     /** Represents a Sleep. */
     class Sleep implements ISleep {
-
-        /**
-         * Constructs a new Sleep.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: protobuf.ISleep);
-
-        /** Sleep duration. */
-        public duration: string;
 
         /**
          * Creates a new Sleep instance using the specified properties.
@@ -466,6 +457,15 @@ export namespace protobuf {
          * @returns Plain object
          */
         public static toObject(message: protobuf.Sleep, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /** Sleep duration. */
+        public duration: string;
+
+        /**
+         * Constructs a new Sleep.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: protobuf.ISleep);
 
         /**
          * Converts this Sleep to JSON.

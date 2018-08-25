@@ -1,16 +1,16 @@
 // Lib imports
-import * as Pixi from 'pixi.js';
+import * as Pixi from "pixi.js";
 
 // Local imports
-//const json = require();
+// const json = require();
 // import '../asset/sprite/test.json';
 
 export class TextureManager {
-    constructor() {
-    }
+  constructor() {
+  }
 
-    init(cb) {
-        PIXI.loader.add('test', '../asset/sprite/test.json')
-        .load(cb);
-    }
+  public init(cb) {
+    PIXI.loader.add("test", "../asset/sprite/test.json")
+      .load(cb);
+  }
 }

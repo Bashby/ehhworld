@@ -1,30 +1,29 @@
 // Lib Imports
-import * as React from 'react';
-import { isEqual } from 'lodash';
-import { Dispatch, bindActionCreators } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { connect } from 'react-redux';
-import { ActionCreator } from 'typescript-fsa';
+import { isEqual } from "lodash";
+import * as React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { ActionCreator } from "typescript-fsa";
 
-import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux'
-import { Route, Switch, Redirect } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
+import { Link } from "react-router-dom";
+import { push } from "react-router-redux";
 
 import * as Pixi from "pixi.js";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // Local Imports
-import { IApplicationState } from '../../state/application';
-import { Game } from '../../game/game';
-import { IInputState } from '../../state/reducers/input';
-
+import { Game } from "../../game/game";
+import { IApplicationState } from "../../state/application";
+import { IInputState } from "../../state/reducers/input";
 
 // Interfaces
 interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
 
 interface MyStateProps {
-	inputState: IInputState
+	inputState: IInputState;
 }
 
 interface MyDispatchProps {
@@ -36,31 +35,31 @@ interface MyOwnProps {
 }
 
 interface State {
-	applicationViewId: string
-	fpsViewId: string
-	stage: Pixi.Container
-	game: Game
-	inputDirty: boolean
+	applicationViewId: string;
+	fpsViewId: string;
+	stage: Pixi.Container;
+	game: Game;
+	inputDirty: boolean;
 	targetDimensions: {
 		width: number,
-		height: number
-	}
-	backgroundColor: number
-	isBackgroundTransparent: boolean
-	pixelResolution: number
-	useRoundPixels: boolean
+		height: number,
+	};
+	backgroundColor: number;
+	isBackgroundTransparent: boolean;
+	pixelResolution: number;
+	useRoundPixels: boolean;
 }
 
 // State mappings
 function mapStateToProps(state: IApplicationState): MyStateProps {
 	return {
-		inputState: state.inputState
-	}
+		inputState: state.inputState,
+	};
 }
 
 function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
 	return {
-	}
+	};
 }
 
 // Styled-components
@@ -75,37 +74,37 @@ const FPSMeterView = styled.div`
 
 // Component class
 class GameComponent extends React.Component<AllProps, State> {
-	private renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer
-	private gameView: HTMLCanvasElement
+	private renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
+	private gameView: HTMLCanvasElement;
 
 	constructor(props: AllProps) {
 		super(props);
-		let stage: Pixi.Container = new Pixi.Container();
+		const stage: Pixi.Container = new Pixi.Container();
 		this.state = {
 			applicationViewId: "appView",
 			fpsViewId: "fpsMeter",
-			stage: stage,
+			stage,
 			game: new Game(stage),
 			inputDirty: false,
 			targetDimensions: {
 				width: 1920,
-				height: 1080
+				height: 1080,
 			},
 			backgroundColor: 55555, // Bright green for now
 			isBackgroundTransparent: false,
 			pixelResolution: 1, // 2 for retina
-			useRoundPixels: true
+			useRoundPixels: true,
 		};
 	}
 
-	componentWillMount() {
-		Pixi.utils.skipHello() // Don't hate me! :(
+	public componentWillMount() {
+		Pixi.utils.skipHello(); // Don't hate me! :(
 	}
 
-	componentDidMount() {
+	public componentDidMount() {
 		// Setup PIXI Canvas
-		let gameView: HTMLCanvasElement = document.getElementById(this.state.applicationViewId) as HTMLCanvasElement;
-		let fpsMeterView: HTMLDivElement = document.getElementById(this.state.fpsViewId) as HTMLDivElement;
+		const gameView: HTMLCanvasElement = document.getElementById(this.state.applicationViewId) as HTMLCanvasElement;
+		const fpsMeterView: HTMLDivElement = document.getElementById(this.state.fpsViewId) as HTMLDivElement;
 		this.renderer = Pixi.autoDetectRenderer({
 			view: gameView,
 			width: this.state.targetDimensions.width,
@@ -119,10 +118,10 @@ class GameComponent extends React.Component<AllProps, State> {
 		// Create our game instance
 		this.state.game.setRenderer(this.renderer);
 		this.state.game.setFpsMeterView(fpsMeterView);
-		
+
 		// Bind listeners for windows resizing
-		window.addEventListener('resize', this.rendererResize);
-		window.addEventListener('deviceOrientation', this.rendererResize);
+		window.addEventListener("resize", this.rendererResize);
+		window.addEventListener("deviceOrientation", this.rendererResize);
 
 		// Initial resize
 		this.rendererResize();
@@ -131,37 +130,37 @@ class GameComponent extends React.Component<AllProps, State> {
 		this.state.game.start();
 	 }
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.rendererResize);
-		window.removeEventListener('deviceOrientation', this.rendererResize);
+	public componentWillUnmount() {
+		window.removeEventListener("resize", this.rendererResize);
+		window.removeEventListener("deviceOrientation", this.rendererResize);
 	}
 
-	componentWillUpdate(nextProps) {
+	public componentWillUpdate(nextProps) {
 		this.handleIncomingInput(nextProps.inputState);
 	}
 
-	handleIncomingInput(newInput): void {
+	public handleIncomingInput(newInput): void {
 		if (!isEqual(newInput, this.props.inputState)) {
 			// Update game state
 			this.state.game.input.setInputState(newInput);
 		}
 	}
 
-	rendererResize = () => {
+	public rendererResize = () => {
 		// Get current state of window
-		let curWidth: number = window.innerWidth;
-		let curHeight: number = window.innerHeight;
-		let curPixelRatio: number = window.devicePixelRatio;
-		
+		const curWidth: number = window.innerWidth;
+		const curHeight: number = window.innerHeight;
+		const curPixelRatio: number = window.devicePixelRatio;
+
 		// Compute actual screen dimensions
-		let screenWidth: number = curWidth * curPixelRatio;
-		let screenHeight: number = curHeight * curPixelRatio;
+		const screenWidth: number = curWidth * curPixelRatio;
+		const screenHeight: number = curHeight * curPixelRatio;
 
 		// Resize the renderer
 		this.renderer.resize(screenWidth, screenHeight);
 
 		// Compute scaling for "NoBorders" scale mode
-		let renderRatio: number = Math.max(screenWidth / this.state.targetDimensions.width, screenHeight / this.state.targetDimensions.height);
+		const renderRatio: number = Math.max(screenWidth / this.state.targetDimensions.width, screenHeight / this.state.targetDimensions.height);
 
 		// Scale the root stage to fill the screen
 		this.state.stage.scale.x = this.state.stage.scale.y = renderRatio;
@@ -174,8 +173,8 @@ class GameComponent extends React.Component<AllProps, State> {
 		// console.log(curWidth, curHeight, curPixelRatio, screenWidth, screenHeight);
 		// console.log("Screen:", screenWidth, screenHeight, "Stage:", this.state.stage.width, this.state.stage.height, "Stage Pos:", this.state.stage.position.x, this.state.stage.position.y, "Stage Scale:", this.state.stage.scale.x, this.state.stage.scale.y);
 	}
-	
-	render() {
+
+	public render() {
 		return (
 			<div>
 				<FPSMeterView id={this.state.fpsViewId} />
@@ -188,5 +187,5 @@ class GameComponent extends React.Component<AllProps, State> {
 // State-aware container
 export const GameContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
 )(GameComponent);

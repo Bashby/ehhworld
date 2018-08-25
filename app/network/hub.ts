@@ -1,41 +1,41 @@
 
 // Local Imports
-import { MessageHandler } from './message';
-import { protobuf as message } from './message.compiled';
-import { Queue } from '../game/util';
+import { Queue } from "../game/util";
+import { MessageHandler } from "./message";
+import { protobuf as message } from "./message.compiled";
 
 export class Hub {
-    ws: WebSocket;
-    handler: MessageHandler;
-    queue: Queue;
+    public ws: WebSocket;
+    public handler: MessageHandler;
+    public queue: Queue;
 
     constructor() {
         // this.handler = new MessageHandler();
     }
 
-    connect(url: string) {
+    public connect(url: string) {
         // Create and bind to websocket
         this.ws = new WebSocket(url);
-        this.ws.onopen = this.onOpen
-        this.ws.onclose = this.onClose
-        this.ws.onerror = this.onError
-        this.ws.onmessage = this.onMessage
+        this.ws.onopen = this.onOpen;
+        this.ws.onclose = this.onClose;
+        this.ws.onerror = this.onError;
+        this.ws.onmessage = this.onMessage;
     }
 
-    onOpen(event: Event) {
+    public onOpen(event: Event) {
         // Create payload
-        let inner = message.Move.create({direction: "hi"});
-        let wrapper = message.Message.create({move: inner});
-        let binary = message.Message.encode(wrapper).finish();
+        const inner = message.Move.create({direction: "hi"});
+        const wrapper = message.Message.create({move: inner});
+        const binary = message.Message.encode(wrapper).finish();
 
         // Pack Header
-        let buffer = new ArrayBuffer(binary.length + 2);
-        let dataView = new DataView(buffer);
-        dataView.setUint16(0, binary.length, false) // pack header using big endian becuase FUCK YOU I LIKE IT
+        const buffer = new ArrayBuffer(binary.length + 2);
+        const dataView = new DataView(buffer);
+        dataView.setUint16(0, binary.length, false); // pack header using big endian becuase FUCK YOU I LIKE IT
 
         // Pack Payload
-        let payloadView = new Uint8Array(buffer, 2);
-        payloadView.set(binary)
+        const payloadView = new Uint8Array(buffer, 2);
+        payloadView.set(binary);
 
         // let payload = new Uint8Array(binary.length + 2);
         // let header = Uint16Array.from([payload.length]);
@@ -45,20 +45,20 @@ export class Hub {
         this.send(buffer);
     }
 
-    onClose(event: CloseEvent) {
+    public onClose(event: CloseEvent) {
         console.log("Socket Closed: " + JSON.stringify(event));
     }
 
-    onError(event: Event) {
+    public onError(event: Event) {
         console.log("Socket Error: " + JSON.stringify(event));
     }
 
-    onMessage(event: MessageEvent) {
+    public onMessage(event: MessageEvent) {
         console.log("Message: " + JSON.stringify(event));
         this.handler.handle(event.data);
     }
 
-    send(data: any) {
+    public send(data: any) {
         if ( this.ws.OPEN ) {
             console.log("Sending: " + data);
             this.ws.send(data);
