@@ -134,7 +134,7 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
       'DEBUG',
-      'NPM_PACKAGE_VERSION',
+      'APP_VERSION',
       'RENDER_TARGET_FPS',
       'SERVER_PROTOCOL',
       'SERVER_HOST',

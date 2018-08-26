@@ -5,7 +5,6 @@ LABEL author="Brendan Ashby <brendan@brendanashby.com>"
 LABEL version="0.1.0"
 
 # Init environment
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 WORKDIR /usr/src/app
 
 # Install deps

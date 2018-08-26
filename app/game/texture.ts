@@ -6,7 +6,11 @@ import * as Pixi from "pixi.js";
 export class TextureManager {
   constructor() {}
 
-  public init() {
-    Pixi.loader.add("test", "../asset/image/sprite/test.json").load();
+  public async init() {
+    return new Promise((resolve, reject) => {
+      Pixi.loader
+        .add("test", "../asset/image/sprite/test.json")
+        .load(() => { resolve(); });
+    });
   }
 }

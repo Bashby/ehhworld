@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/webpack-serve --no-clipboard --require babel-register --config ./webpack.dev.config.babel.js",
+    "dev": "cross-env APP_VERSION=$npm_package_version webpack-serve --require babel-register --config ./webpack.dev.config.babel.js",
     "build": "webpack --config ./webpack.prod.config.babel.js --progress --profile --colors",
     "serve": "node build/app.js",
     "lint": "tslint ./app/**/*.{ts,tsx}",
@@ -47,6 +47,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "clean-webpack-plugin": "^0.1.19",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
     "fpsmeter": "^0.3.1",

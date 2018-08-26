@@ -15,7 +15,6 @@ services:
       # Generic
       - NODE_ENV=development
       - DEBUG=false
-      - NPM_PACKAGE_VERSION=${NPM_PACKAGE_VERSION:-?}
 
       # Rendering
       - RENDER_TARGET_FPS=75

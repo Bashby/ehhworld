@@ -27,64 +27,26 @@ export class Player extends GameObject {
         this.renderTarget.addChild(this.displayObject);
 
         const textures = [
-            PIXI.utils.TextureCache["tile000.png"],
-            PIXI.utils.TextureCache["tile001.png"],
-            PIXI.utils.TextureCache["tile002.png"],
-            PIXI.utils.TextureCache["tile003.png"],
-            PIXI.utils.TextureCache["tile004.png"],
-            PIXI.utils.TextureCache["tile005.png"],
-            PIXI.utils.TextureCache["tile006.png"],
-            PIXI.utils.TextureCache["tile007.png"],
-            PIXI.utils.TextureCache["tile008.png"],
-            PIXI.utils.TextureCache["tile009.png"],
-        ];
-        const textures2 = [
-            PIXI.utils.TextureCache["tile010.png"],
-            PIXI.utils.TextureCache["tile011.png"],
-            PIXI.utils.TextureCache["tile012.png"],
-            PIXI.utils.TextureCache["tile013.png"],
-            PIXI.utils.TextureCache["tile014.png"],
-            PIXI.utils.TextureCache["tile015.png"],
-            PIXI.utils.TextureCache["tile016.png"],
-            PIXI.utils.TextureCache["tile017.png"],
-            PIXI.utils.TextureCache["tile018.png"],
-            PIXI.utils.TextureCache["tile019.png"],
-        ];
-        const textures3 = [
-            PIXI.utils.TextureCache["tile020.png"],
-            PIXI.utils.TextureCache["tile021.png"],
-            PIXI.utils.TextureCache["tile022.png"],
-            PIXI.utils.TextureCache["tile023.png"],
-            PIXI.utils.TextureCache["tile024.png"],
-            PIXI.utils.TextureCache["tile025.png"],
-            PIXI.utils.TextureCache["tile026.png"],
-            PIXI.utils.TextureCache["tile027.png"],
-            PIXI.utils.TextureCache["tile028.png"],
-            PIXI.utils.TextureCache["tile029.png"],
+            Pixi.utils.TextureCache["tile000.png"],
+            Pixi.utils.TextureCache["tile001.png"],
+            Pixi.utils.TextureCache["tile002.png"],
+            Pixi.utils.TextureCache["tile003.png"],
+            Pixi.utils.TextureCache["tile004.png"],
+            Pixi.utils.TextureCache["tile005.png"],
+            Pixi.utils.TextureCache["tile006.png"],
+            Pixi.utils.TextureCache["tile007.png"],
+            Pixi.utils.TextureCache["tile008.png"],
+            Pixi.utils.TextureCache["tile009.png"],
         ];
 
-        const sprite = new PIXI.extras.AnimatedSprite(textures);
-        const sprite2 = new PIXI.extras.AnimatedSprite(textures2);
-        const sprite3 = new PIXI.extras.AnimatedSprite(textures3);
+        const sprite = new Pixi.extras.AnimatedSprite(textures);
         sprite.animationSpeed = 0.1;
-        sprite2.animationSpeed = 0.1;
-        sprite3.animationSpeed = 0.1;
         sprite.scale = new Pixi.Point(5, 5);
-        sprite2.scale = new Pixi.Point(5, 5);
-        sprite3.scale = new Pixi.Point(5, 5);
         sprite.filters = [new OutlineFilter(5, 0xFF0000)];
         sprite.play();
-        sprite2.play();
-        sprite3.play();
-        sprite3.position.x = (this.renderTarget.width / 2 - 80);
-        sprite3.position.y = (this.renderTarget.height / 2 - 80);
-        sprite2.position.x = (this.renderTarget.width / 2 + 80);
-        sprite2.position.y = (this.renderTarget.height / 2 + 80);
         sprite.position.x = (this.renderTarget.width / 2);
         sprite.position.y = (this.renderTarget.height / 2);
         this.renderTarget.addChild(sprite);
-        this.renderTarget.addChild(sprite2);
-        this.renderTarget.addChild(sprite3);
 
         this.init();
     }

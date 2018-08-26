@@ -1,6 +1,6 @@
 // Constants
 // General
-export const APP_VERSION: string = process.env.NPM_PACKAGE_VERSION;
+export const APP_VERSION: string = process.env.APP_VERSION;
 export const DEBUG_MODE: boolean = process.env.NODE_ENV !== "production";
 
 // Rendering

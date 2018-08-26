@@ -68,6 +68,13 @@ module.exports = merge(CommonWebpackConfig, {
         server: '0.0.0.0'
       },
       port: 9091,
+    },
+    devMiddleware: {
+      publicPath: '/',
+      watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000
+      }
     }
   }
 });
