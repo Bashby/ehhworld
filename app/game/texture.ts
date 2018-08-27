@@ -9,7 +9,7 @@ export class TextureManager {
   public async init() {
     return new Promise((resolve, reject) => {
       Pixi.loader
-        .add("test", "../asset/image/sprite/test.json")
+        .add("deer", "../asset/image/sprite/deer/deer.json")
         .load(() => { resolve(); });
     });
   }

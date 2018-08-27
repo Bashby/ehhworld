@@ -1,5 +1,5 @@
 // Lib imports
-import { OutlineFilter } from "pixi-filters";
+import { GlowFilter } from "pixi-filters";
 import * as Pixi from "pixi.js";
 
 // Local imports
@@ -26,23 +26,25 @@ export class Player extends GameObject {
         this.renderTarget = this.game.stage;
         this.renderTarget.addChild(this.displayObject);
 
+        console.log(Pixi.utils.TextureCache);
+        console.log(PIXI.loader.resources);
         const textures = [
-            Pixi.utils.TextureCache["tile000.png"],
-            Pixi.utils.TextureCache["tile001.png"],
-            Pixi.utils.TextureCache["tile002.png"],
-            Pixi.utils.TextureCache["tile003.png"],
-            Pixi.utils.TextureCache["tile004.png"],
-            Pixi.utils.TextureCache["tile005.png"],
-            Pixi.utils.TextureCache["tile006.png"],
-            Pixi.utils.TextureCache["tile007.png"],
-            Pixi.utils.TextureCache["tile008.png"],
-            Pixi.utils.TextureCache["tile009.png"],
+            Pixi.utils.TextureCache["deer0.png"],
+            Pixi.utils.TextureCache["deer1.png"],
+            Pixi.utils.TextureCache["deer2.png"],
+            Pixi.utils.TextureCache["deer3.png"],
+            Pixi.utils.TextureCache["deer4.png"],
+            Pixi.utils.TextureCache["deer5.png"],
+            Pixi.utils.TextureCache["deer6.png"],
+            Pixi.utils.TextureCache["deer7.png"],
+            Pixi.utils.TextureCache["deer8.png"],
+            Pixi.utils.TextureCache["deer9.png"],
         ];
 
         const sprite = new Pixi.extras.AnimatedSprite(textures);
         sprite.animationSpeed = 0.1;
         sprite.scale = new Pixi.Point(5, 5);
-        sprite.filters = [new OutlineFilter(5, 0xFF0000)];
+        sprite.filters = [new GlowFilter(15, 10, 0, 0xFF0000)];
         sprite.play();
         sprite.position.x = (this.renderTarget.width / 2);
         sprite.position.y = (this.renderTarget.height / 2);

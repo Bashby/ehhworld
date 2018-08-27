@@ -1,0 +1,228 @@
+{
+    "frames": {
+        "deer0.png": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer1.png": {
+            "frame": {
+                "x": 104,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer2.png": {
+            "frame": {
+                "x": 208,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer3.png": {
+            "frame": {
+                "x": 0,
+                "y": 122,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer4.png": {
+            "frame": {
+                "x": 104,
+                "y": 122,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer5.png": {
+            "frame": {
+                "x": 208,
+                "y": 122,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer6.png": {
+            "frame": {
+                "x": 0,
+                "y": 244,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer7.png": {
+            "frame": {
+                "x": 104,
+                "y": 244,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer8.png": {
+            "frame": {
+                "x": 208,
+                "y": 244,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        },
+        "deer9.png": {
+            "frame": {
+                "x": 0,
+                "y": 366,
+                "w": 104,
+                "h": 122
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 104,
+                "h": 122
+            },
+            "sourceSize": {
+                "w": 104,
+                "h": 122
+            }
+        }
+    },
+    "meta": {
+        "license": "https://creativecommons.org/licenses/by/3.0/",
+        "license-holder": "https://opengameart.org/users/tracy",
+        "retrived-date": "2018-08-27T02:08:18+00:00",
+        "retrieved-url": "https://opengameart.org/content/deer-npc",
+        "animations": {
+            "idle_s": [
+                {
+                    
+                }
+            ],
+            "idle_sw": [],
+            "idle_w": [],
+            "idle_nw": [],
+            "idle_n": []
+        },
+        "version": "1.0",
+        "image": "deer.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 312,
+            "h": 488
+        }
+    }
+}
