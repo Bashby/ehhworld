@@ -4,18 +4,17 @@ import * as Pixi from "pixi.js";
 // Local Imports
 import { IInputState } from "../state/reducers/input";
 import { Game } from "./game";
-import { UnitVector, UnitVectorValue } from "./util";
-
+import { IUnitVector, UnitVectorValue } from "./util/types";
 
 export interface IInputManagerState extends IInputState {
-    directionVector: UnitVector
-    mousePosition: Pixi.Point
+    directionVector: IUnitVector;
+    mousePosition: Pixi.Point;
 }
 
 export class InputManager {
-    game: Game
-    inputState: IInputState
-    directionVector: UnitVector
+    public game: Game;
+    public inputState: IInputState;
+    public directionVector: IUnitVector;
 
     constructor(game: Game) {
         this.game = game;
@@ -28,39 +27,40 @@ export class InputManager {
         };
         this.directionVector = {
             x: UnitVectorValue.Zero,
-            y: UnitVectorValue.Zero
+            y: UnitVectorValue.Zero,
         };
     }
 
-    getMousePosition(): Pixi.Point {
+    public getMousePosition(): Pixi.Point {
         return this.game.renderer.plugins.interaction.mouse.global;
     }
 
-    setInputState(newState: IInputState): void {
+    public setInputState(newState: IInputState): void {
         this.inputState = newState;
 
         // Derive
-        let x = 0, y = 0;
+        let x = 0;
+        let y = 0;
         if (this.inputState.left) {
-            x -= 1
+            x -= 1;
         }
         if (this.inputState.right) {
-            x += 1
+            x += 1;
         }
         if (this.inputState.up) {
-            y -= 1
+            y -= 1;
         }
         if (this.inputState.down) {
-            y += 1
+            y += 1;
         }
         this.directionVector = {x, y};
     }
 
-    getState(): IInputManagerState {
+    public getState(): IInputManagerState {
         return {
             ...this.inputState,
             directionVector: this.directionVector,
             mousePosition: this.getMousePosition(),
-        }
+        };
     }
 }

@@ -1,0 +1,18 @@
+# All entities in the game logic
+# Where <all required>:
+#   id: a uint32 (0 to 4,294,967,295)
+#   type: a string enum of [player, item, world, effect, meta]
+#   name: a utf-8 / unicode human-readable name
+entities:
+  - id: 10
+    type: meta
+    name: ehh world
+  - id: 100
+    type: player
+    name: player
+  - id: 1000
+    type: item
+    name: sword
+  - id: ?
+    type:
+    name:

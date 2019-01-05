@@ -1,78 +1,68 @@
 // Lib Imports
-import * as React from 'react';
-import { Dispatch, bindActionCreators } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { connect } from 'react-redux';
-import { ActionCreator } from 'typescript-fsa';
-
-import styled from 'styled-components';
-
-import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux'
-import { Route, Switch, Redirect } from "react-router";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import styled from "styled-components";
 
 // Local Imports
-import { IApplicationState } from '../../state/application';
-import { GUIBaseView } from '../styles';
-
+import { IApplicationState } from "../../state/application";
+import { GUIBaseView } from "../styled";
 
 // Interfaces
-interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
+interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
 
-interface MyStateProps {
-
+interface IMyStateProps {
 }
 
-interface MyDispatchProps {
-
+interface IMyDispatchProps {
 }
 
-interface MyOwnProps {
-
+interface IMyOwnProps {
 }
 
-interface State {
-	
+interface IState {
 }
 
 // State mappings
-function mapStateToProps(state: IApplicationState): MyStateProps {
-	return {
-	}
+function mapStateToProps(state: IApplicationState): IMyStateProps {
+    return {
+    };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
-	return {
-	}
+function mapDispatchToProps(dispatch: Dispatch): IMyDispatchProps {
+    return {
+    };
 }
 
-// Styled-components
+// Styles
 const ActionBarContainerView = styled(GUIBaseView)`
-	width: 99.42vw;
-	height: 5vh;
-	bottom: 0.5vh;
-	left: 0.29vw;
+    width: 99.42vw;
+    height: 5vh;
+    bottom: 0.5vh;
+    left: 0.29vw;
 `;
 
-// Component class
-class ActionBarComponent extends React.Component<AllProps, State> {
-	constructor(props: AllProps) {
-		super(props);
-		this.state = {
-		};
-	}
+// Component
+class ActionBarComponent extends Component<IAllProps, IState> {
+    public readonly state: IState;
 
-	render() {
-		return (
-			<ActionBarContainerView>
-				ActionBar Container!
-			</ActionBarContainerView>
-		);
-	}
+    constructor(props: IAllProps) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    public render() {
+        return (
+            <ActionBarContainerView>
+                ActionBar Container!
+            </ActionBarContainerView>
+        );
+    }
 }
 
-// State-aware container
-export const ActionBarContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
+// Container
+export const ActionBarContainer = connect<IMyStateProps, IMyDispatchProps, IMyOwnProps>(
+    mapStateToProps,
+    mapDispatchToProps,
 )(ActionBarComponent);

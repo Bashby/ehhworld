@@ -3,7 +3,6 @@
 
 // // Local imports
 
-
 // interface IWorldPositionParams {
 // 	x: number
 // 	y: number
@@ -22,10 +21,13 @@
 // 	}
 
 // 	get<T extends keyof IWorldPositionParams>(value: T): IWorldPositionParams[T] {
-// 		return super.get(value) 
+// 		return super.get(value)
 // 	}
 
-// 	set<K extends keyof IWorldPositionParams, V extends IWorldPositionParams[K]>(key: K, value: V): IWorldPositionParams {
-// 		return super.set(key, value) 
+// 	set<
+    //     K extends keyof IWorldPositionParams,
+    //     V extends IWorldPositionParams[K]
+    // >(key: K, value: V): IWorldPositionParams {
+// 		return super.set(key, value)
 // 	}
 // }

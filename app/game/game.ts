@@ -1,141 +1,102 @@
 // Lib Imports
-import * as Pixi from 'pixi.js';
-import * as MainLoop from 'mainloop.js';
+import MainLoop from "mainloop.js";
+import * as Pixi from "pixi.js";
 
-// Local Imports
-import { config, SERVER_URL } from './config';
-import { Hub } from '../network';
-import { ObjectManager } from './object';
-import { IInputState } from '../state/reducers/input';
-import { InputManager } from './input';
-import { SoundManager } from './sound';
-import { Player } from './object/player';
-import { Viewport } from './viewport';
-import { TextureManager } from './texture';
-
+// Local imports
+import { Hub } from "../network";
+import { InputManager } from "./input";
+import { ObjectManager } from "./object";
+import { SoundManager } from "./sound";
+import { TextureManager } from "./texture";
+import { DEBUG_MODE, RENDER_FPS_TARGET, SERVER_URL } from "./util/constant";
+import { Viewport } from "./viewport";
 
 export class Game {
-	// Rendering
-	renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
-	stage: Pixi.Container;
-	fpsMeterView: HTMLDivElement;
+    // Rendering
+    public renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
+    public stage: Pixi.Container;
+    public fpsMeterView: HTMLDivElement;
 
-	// Sub-system Managers
-	network: Hub
-	objects: ObjectManager
-	input: InputManager
-	viewport: Viewport
-	sound: SoundManager
-	texture: TextureManager
+    // Sub-system Managers
+    public network: Hub;
+    public objects: ObjectManager;
+    public input: InputManager;
+    public viewport: Viewport;
+    public sound: SoundManager;
+    public texture: TextureManager;
 
-	// Game state
-	debug: boolean = config.get('debug');
+    // Game state
+    public debug: boolean = DEBUG_MODE;
 
-	// Game loop
-	loop: MainLoop
-	targetFPS: number = config.get('render.fps');
-	timeStep: number = 1000 / this.targetFPS;
+    // Game loop
+    public loop: MainLoop;
+    public targetFPS: number = RENDER_FPS_TARGET;
+    public timeStep: number = 1000 / this.targetFPS;
 
-	constructor(stage: Pixi.Container) {
-		this.stage = stage; 
+    constructor(stage: Pixi.Container) {
+        this.stage = stage;
 
-		// Init Sub-systems
-		this.objects = new ObjectManager(this);
-		this.input = new InputManager(this);
-		this.sound = new SoundManager();
-		this.texture = new TextureManager();
-		this.network = new Hub()
-		this.network.connect(SERVER_URL);
+        // Init Sub-systems
+        this.objects = new ObjectManager(this);
+        this.input = new InputManager(this);
+        this.sound = new SoundManager();
+        this.texture = new TextureManager();
+        this.network = new Hub();
+        this.network.connect(SERVER_URL);
 
-		// Setup game loop
-		this.loop = MainLoop
-			.setSimulationTimestep(this.timeStep)
-			.setUpdate(this.update.bind(this))
-			.setDraw(this.draw.bind(this))
-			.setEnd(this.end.bind(this));
-	}
+        // Setup game loop
+        this.loop = MainLoop
+            .setSimulationTimestep(this.timeStep)
+            .setUpdate(this.update.bind(this))
+            .setDraw(this.draw.bind(this))
+            .setEnd(this.end.bind(this));
+    }
 
-	setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
-		this.renderer = renderer;
-	}
+    public setRenderer(renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
+        this.renderer = renderer;
+    }
 
-	setFpsMeterView(view: HTMLDivElement) {
-		this.fpsMeterView = view;
-	}
+    public setFpsMeterView(view: HTMLDivElement) {
+        this.fpsMeterView = view;
+    }
 
-	start() {
-		if (!this.renderer) {
-			console.error("No renderer defined for game!");
-		} else {
-			this.texture.init(this.loopStart.bind(this));
-			//this.loop.start();
-			// this.running = true
-			// requestAnimationFrame(this.tick.bind(this));
-		}
-	}
+    public async start() {
+        // Load in resources
+        await this.sound.init();
+        await this.texture.init();
 
-	loopStart() {
-		this.objects.debug();
-		this.loop.start();
-	}
+        // Add player
+        this.objects.createPlayer();
 
-	stop() {
-		this.loop.stop();
-	}
+        // Start the game loop
+        this.loopStart();
+    }
 
-	// restart() {
-	// 	this.shouldRestart = true;
-	// 	this.stop();
-	// }
+    public loopStart() {
+        this.loop.start();
+    }
 
-	// tick(currentFrameTime) {
-	// 	if (this.running) {
-	// 		// Show FPS
-	// 		this.fpsMeter.tickStart();
+    public stop() {
+        this.loop.stop();
+    }
 
-	// 		// Calculate delta time
-	// 		this.deltaTime = this.deltaTime + (currentFrameTime - this.lastFrameTime);
+    public update(dt: number) {
+        this.objects.update(dt);
+    }
 
-	// 		// Save current frame time
-	// 		this.lastFrameTime = currentFrameTime;
+    public draw(interp: number) {
+        this.objects.draw(interp);
+        this.renderer.render(this.stage);
+    }
 
-	// 		// Update game state using fixed timestep
-	// 		while (this.deltaTime >= this.MS_PER_UPDATE) {
-	// 			this.deltaTime = this.deltaTime - this.MS_PER_UPDATE;
-	// 			this.update(this.MS_PER_UPDATE);
-	// 		}
-
-	// 		// Render game
-	// 		this.renderer.render(this.stage);
-
-	// 		// Show FPS
-	// 		this.fpsMeter.tick();
-
-	// 		// Request next frame
-	// 		requestAnimationFrame(this.tick.bind(this));
-	// 	} else if (this.shouldRestart) {
-	// 		this.shouldRestart = false;
-	// 		this.start();
-	// 	}
-	// }
-
-	update(dt: number) {
-		this.objects.step(dt);
-	}
-
-	draw(interp: number) {
-		this.objects.draw(interp);
-		this.renderer.render(this.stage);
-	}
-
-	end(fps: number, panic: boolean) {
-		//console.log(this.loop.getMaxAllowedFPS(), this.loop.getSimulationTimestep());
-		if (this.fpsMeterView) {
-			this.fpsMeterView.textContent = Math.round(fps) + ' FPS';
-		}
-		if (panic) {
-			var discardedTime = Math.round(MainLoop.resetFrameDelta());
-			console.warn('Main loop panicked. Discarding ' + discardedTime + 'ms');
-		}
-	}
+    public end(fps: number, panic: boolean) {
+        if (this.fpsMeterView) {
+            this.fpsMeterView.textContent = Math.round(fps) + " FPS";
+        }
+        if (panic) {
+            const discardedTime = Math.round(MainLoop.resetFrameDelta());
+            // tslint:disable-next-line:no-console
+            console.warn("Main loop panicked. Discarding " + discardedTime + "ms");
+        }
+    }
 }

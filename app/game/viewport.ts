@@ -1,33 +1,30 @@
-// Lib Imports
-import * as Pixi from 'pixi.js';
-
-
+// Lib imports
+import * as Pixi from "pixi.js";
 
 export class Viewport extends Pixi.Container {
-    id: string = 'viewport'
-    _screenWidth: number
-    _screenHeight: number
-    _worldWidth: number
-    _worldHeight: number
+    public id: string = "viewport";
+    public screenWidth: number;
+    public screenHeight: number;
+    public worldWidth: number;
+    public worldHeight: number;
 
     constructor(options) {
-        super()
+        super();
 
         // Apply Configuration
-        options = options || {}
-        this._screenWidth = options.screenWidth
-        this._screenHeight = options.screenHeight
-        this._worldWidth = options.worldWidth
-        this._worldHeight = options.worldHeight
+        options = options || {};
+        this.screenWidth = options.screenWidth;
+        this.screenHeight = options.screenHeight;
+        this.worldWidth = options.worldWidth;
+        this.worldHeight = options.worldHeight;
     }
 
-    update(dt: number) {
-    }
+    // public update(dt: number) {}
 
-    resize(screenWidth, screenHeight, worldWidth, worldHeight) {
-        this._screenWidth = screenWidth || window.innerWidth
-        this._screenHeight = screenHeight || window.innerHeight
-        this._worldWidth = worldWidth
-        this._worldHeight = worldHeight
+    public resize(screenWidth, screenHeight, worldWidth, worldHeight) {
+        this.screenWidth = screenWidth || window.innerWidth;
+        this.screenHeight = screenHeight || window.innerHeight;
+        this.worldWidth = worldWidth;
+        this.worldHeight = worldHeight;
     }
 }

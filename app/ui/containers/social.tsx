@@ -1,75 +1,65 @@
 // Lib Imports
-import * as React from 'react';
-import { Dispatch, bindActionCreators } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { connect } from 'react-redux';
-import { ActionCreator } from 'typescript-fsa';
-
-import styled from 'styled-components';
-
-import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux'
-import { Route, Switch, Redirect } from "react-router";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import styled from "styled-components";
 
 // Local Imports
-import { IApplicationState } from '../../state/application';
-import { GUIOverlayView } from '../styles';
-
+import { IApplicationState } from "../../state/application";
+import { GUIOverlayView } from "../styled";
 
 // Interfaces
-interface AllProps extends MyStateProps, MyDispatchProps, MyOwnProps {}
+interface IAllProps extends IMyStateProps, IMyDispatchProps, IMyOwnProps {}
 
-interface MyStateProps {
-
+interface IMyStateProps {
 }
 
-interface MyDispatchProps {
-
+interface IMyDispatchProps {
 }
 
-interface MyOwnProps {
-
+interface IMyOwnProps {
 }
 
-interface State {
-	
+interface IState {
 }
 
 // State mappings
-function mapStateToProps(state: IApplicationState): MyStateProps {
-	return {
-	}
+function mapStateToProps(state: IApplicationState): IMyStateProps {
+    return {
+    };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>): MyDispatchProps {
-	return {
-	}
+function mapDispatchToProps(dispatch: Dispatch): IMyDispatchProps {
+    return {
+    };
 }
 
-// Styled-components
+// Styles
 const SocialContainerView = styled(GUIOverlayView)`
-	background-color: orange;
+    background-color: orange;
 `;
 
-// Component class
-class SocialComponent extends React.Component<AllProps, State> {
-	constructor(props: AllProps) {
-		super(props);
-		this.state = {
-		};
-	}
+// Component
+class SocialComponent extends Component<IAllProps, IState> {
+    public readonly state: IState;
 
-	render() {
-		return (
-			<SocialContainerView>
-				Social Container!
-			</SocialContainerView>
-		);
-	}
+    constructor(props: IAllProps) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    public render() {
+        return (
+            <SocialContainerView>
+                Social Container!
+            </SocialContainerView>
+        );
+    }
 }
 
-// State-aware container
-export const SocialContainer = connect<MyStateProps, MyDispatchProps, MyOwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
+// Container
+export const SocialContainer = connect<IMyStateProps, IMyDispatchProps, IMyOwnProps>(
+    mapStateToProps,
+    mapDispatchToProps,
 )(SocialComponent);
